@@ -15,16 +15,17 @@ struct ScanView: View {
         WithViewStore(store) { viewStore in
             NavigationView(content: {
                 VStack(alignment: .leading) {
-                    VStack {
-                        Text("Submit a scan at your current location to search.")
-                        switch viewStore.scanResult.onWiFi {
-                        case true: Label("On Wifi", systemImage: "wifi").foregroundColor(.green)
-                        case false: Label("Off Wifi", systemImage: "wifi.slash").foregroundColor(.red)
-                        }
-                    }
-                    .padding()
 
                     List {
+                        Section(footer:
+                                    VStack(alignment: .leading) {
+                                        Text("Submit a scan at your current location to search.")
+                                        switch viewStore.scanResult.onWiFi {
+                                        case true: Label("On Wifi", systemImage: "wifi").foregroundColor(.green)
+                                        case false: Label("Off Wifi", systemImage: "wifi.slash").foregroundColor(.red)
+                                        }
+                                    }
+                            ){}
                         Section(header: Text("Address")) {
                             Text(viewStore.scanResult.address)
                                 .font(.system(.subheadline, design: .monospaced))
@@ -48,24 +49,33 @@ struct ScanView: View {
                                 .font(.system(.subheadline, design: .monospaced))
                         }
                     }
-                    .listStyle(PlainListStyle())
+                    .listStyle(InsetGroupedListStyle())
                     
                     switch viewStore.scanning {
-                    case .notStarted, .started:
+                    case .notStarted:
                         Button(action: {
                             viewStore.send(.startScannerDownload)
                         }, label: {
-                            Text("Scan")
-                                .font(.headline)
-                                .frame(maxWidth: .infinity)
-                                .foregroundColor(.white)
-                                .padding()
-                                .background(Color.blue)
-                                .clipShape(Capsule())
+                                Text("Scan")
+                                    .font(.headline)
+                                    .frame(maxWidth: .infinity)
+                                    .foregroundColor(.white)
+                                    .padding()
+                                    .background(Color.blue)
+                                    .clipShape(Capsule())
                         })
                         .padding()
-                        .opacity(viewStore.scanning == .started ? 0.7 : 1.0)
-                        .disabled(viewStore.scanning == .started)
+                        
+                    case .started:
+                        ProgressView()
+                            .colorScheme(.dark)
+                            .font(.headline)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.blue.opacity(0.7))
+                            .clipShape(Capsule())
+                            .padding()
+                        
                     case .completed, .saved:
                         Button(action: {
                             viewStore.send(.forceDismissScanner)
@@ -80,9 +90,8 @@ struct ScanView: View {
                         })
                         .padding()
                     }
-
-                    
                 }
+//                .background(Color.red)
                 .navigationBarTitle("Scan")
                 .navigationBarItems(leading:
                                     Button(action: {

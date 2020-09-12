@@ -72,7 +72,7 @@ enum ScanningState: Equatable {
 }
 
 struct AppState: Equatable {
-    var showScanner: Bool = false
+    var showScanner: Bool = true
     var isEditing: Bool = false
     var scanning: ScanningState = .notStarted
     var queryString: String = ""
@@ -125,9 +125,7 @@ struct LocationManagerId: Hashable {}
 let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environment in
     switch action {
     case .presentScanner:
-        environment.nwPathMonitor.start(queue: .main)
         state.showScanner = true
-        
         
     case let .updateQuery(query):
         state.queryString = query
@@ -172,7 +170,6 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
                                              current: { (current, average) in
                                                 subscriber.send(.updateDownloadScanner(current, average))
                                              }, final: { result in
-                                                print(result)
                                                 subscriber.send(.startScannerUpload)
                                              })
             return AnyCancellable {}
@@ -191,7 +188,6 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
                                            current: { (current, average) in
                                             subscriber.send(.updateUploadScanner(current, average))
                                            }, final: { result in
-                                            print(result)
                                             subscriber.send(.startSaveResults)
                                            })
             return AnyCancellable {}
@@ -236,7 +232,6 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
         return Effect(value: AppAction.dismissScanner)
         
     case .dismissScanner:
-        environment.nwPathMonitor.cancel()
         state.scanning = .notStarted
         break
         
@@ -276,6 +271,7 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
                     let onWifi = path.usesInterfaceType(.wifi)
                     subscriber.send(.updateOnWiFi(onWifi))
                 }
+                environment.nwPathMonitor.start(queue: .main)
                 return AnyCancellable {}
             }
         )
@@ -285,7 +281,10 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
     case .onBackground:
         return .merge(
             Effect(value: AppAction.stopLocationManager),
-            environment.locationManager.destroy(id: LocationManagerId()).fireAndForget()
+            environment.locationManager.destroy(id: LocationManagerId()).fireAndForget(),
+            .fireAndForget {
+                environment.nwPathMonitor.cancel()
+            }
         )
         
     // MARK: - Location Manager
