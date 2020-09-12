@@ -286,11 +286,11 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
             environment.locationManager.create(id: LocationManagerId()).map(AppAction.locationManager),
             Effect(value: AppAction.startLocationManager),
             Effect.run { subscriber in
+                environment.nwPathMonitor.start(queue: .main)
                 environment.nwPathMonitor.pathUpdateHandler = { path in
                     let onWifi = path.usesInterfaceType(.wifi)
                     subscriber.send(.updateOnWiFi(onWifi))
                 }
-                environment.nwPathMonitor.start(queue: .main)
                 return AnyCancellable {}
             }
         )
@@ -300,10 +300,7 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
     case .onBackground:
         return .merge(
             Effect(value: AppAction.stopLocationManager),
-            environment.locationManager.destroy(id: LocationManagerId()).fireAndForget(),
-            .fireAndForget {
-                environment.nwPathMonitor.cancel()
-            }
+            environment.locationManager.destroy(id: LocationManagerId()).fireAndForget()
         )
         
     // MARK: - Location Manager

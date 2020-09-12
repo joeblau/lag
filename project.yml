@@ -1,0 +1,46 @@
+name: Lag
+settings:
+  DEVELOPMENT_TEAM: K78G42H4U2
+  CURRENT_PROJECT_VERSION: 1
+  MARKETING_VERSION: 0.1.0
+options:
+  bundleIdPrefix: com.joeblau
+  deploymentTarget:
+    watchOS: "7.0"
+    iOS: "14.0"
+  createIntermediateGroups: true
+  preGenCommand: .github/scripts/pre.sh
+  postGenCommand: .github/scripts/post.sh
+packages:
+  swift-composable-architecture:
+    url: https://github.com/copilotcomputer/swift-composable-architecture
+    branch: master
+  algolia-search-client:
+    url: https://github.com/joeblau/algoliasearch-client-swift
+    branch: master
+  speed-test-kit:
+    url: https://github.com/joeblau/speed-test-kit
+    branch: master
+targets:
+  Lag:
+    type: application
+    platform: iOS
+    sources:
+      - path: Lag
+        excludes:
+          - Lag/PreviewContent/*
+      - path: Lag/Resources/
+        buildPhase: resources
+    settings:
+      DEVELOPMENT_ASSET_PATHS: Lag/PreviewContent
+      PRODUCT_BUNDLE_IDENTIFIER: com.joeblau.Lag
+      ASSETCATALOG_COMPILER_APPICON_NAME: iOSAppIcon
+    dependencies:
+      - package: swift-composable-architecture
+        product: ComposableArchitecture
+      - package: swift-composable-architecture
+        product: ComposableCoreLocation
+      - package: algolia-search-client
+        product: AlgoliaSearchClient
+      - package: speed-test-kit
+        product: SpeedTestKit
