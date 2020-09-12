@@ -3,23 +3,35 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		EDAC85A2250C06BE00D48B1A /* LatencyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDAC85A1250C06BE00D48B1A /* LatencyApp.swift */; };
-		EDAC85A4250C06BE00D48B1A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDAC85A3250C06BE00D48B1A /* ContentView.swift */; };
+		EDAC85A4250C06BE00D48B1A /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDAC85A3250C06BE00D48B1A /* SearchView.swift */; };
 		EDAC85A6250C06BE00D48B1A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EDAC85A5250C06BE00D48B1A /* Assets.xcassets */; };
 		EDAC85A9250C06BE00D48B1A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EDAC85A8250C06BE00D48B1A /* Preview Assets.xcassets */; };
+		EDAC85B5250C071B00D48B1A /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = EDAC85B4250C071B00D48B1A /* ComposableArchitecture */; };
+		EDAC85B7250C071B00D48B1A /* ComposableCoreLocation in Frameworks */ = {isa = PBXBuildFile; productRef = EDAC85B6250C071B00D48B1A /* ComposableCoreLocation */; };
+		EDAC85B9250C072F00D48B1A /* AppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDAC85B8250C072F00D48B1A /* AppReducer.swift */; };
+		EDAC85BF250C0A8B00D48B1A /* AlgoliaSearchClient in Frameworks */ = {isa = PBXBuildFile; productRef = EDAC85BE250C0A8B00D48B1A /* AlgoliaSearchClient */; };
+		EDAC85C1250C0C3800D48B1A /* ScanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDAC85C0250C0C3800D48B1A /* ScanView.swift */; };
+		EDAC85C3250C102600D48B1A /* SampleAppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDAC85C2250C102600D48B1A /* SampleAppReducer.swift */; };
+		EDC5CC30250C30DE00B0CAF4 /* LocationManagerReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC5CC2F250C30DE00B0CAF4 /* LocationManagerReducer.swift */; };
+		EDC5CC33250C406100B0CAF4 /* SpeedTestKit in Frameworks */ = {isa = PBXBuildFile; productRef = EDC5CC32250C406100B0CAF4 /* SpeedTestKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		EDAC859E250C06BE00D48B1A /* Latency.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Latency.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDAC85A1250C06BE00D48B1A /* LatencyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LatencyApp.swift; sourceTree = "<group>"; };
-		EDAC85A3250C06BE00D48B1A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		EDAC85A3250C06BE00D48B1A /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		EDAC85A5250C06BE00D48B1A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EDAC85A8250C06BE00D48B1A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		EDAC85AA250C06BE00D48B1A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EDAC85B8250C072F00D48B1A /* AppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
+		EDAC85C0250C0C3800D48B1A /* ScanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanView.swift; sourceTree = "<group>"; };
+		EDAC85C2250C102600D48B1A /* SampleAppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleAppReducer.swift; sourceTree = "<group>"; };
+		EDC5CC2F250C30DE00B0CAF4 /* LocationManagerReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagerReducer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,6 +39,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDAC85BF250C0A8B00D48B1A /* AlgoliaSearchClient in Frameworks */,
+				EDC5CC33250C406100B0CAF4 /* SpeedTestKit in Frameworks */,
+				EDAC85B7250C071B00D48B1A /* ComposableCoreLocation in Frameworks */,
+				EDAC85B5250C071B00D48B1A /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,8 +68,11 @@
 		EDAC85A0250C06BE00D48B1A /* Latency */ = {
 			isa = PBXGroup;
 			children = (
+				EDAC85C0250C0C3800D48B1A /* ScanView.swift */,
+				EDAC85A3250C06BE00D48B1A /* SearchView.swift */,
 				EDAC85A1250C06BE00D48B1A /* LatencyApp.swift */,
-				EDAC85A3250C06BE00D48B1A /* ContentView.swift */,
+				EDAC85B8250C072F00D48B1A /* AppReducer.swift */,
+				EDC5CC2F250C30DE00B0CAF4 /* LocationManagerReducer.swift */,
 				EDAC85A5250C06BE00D48B1A /* Assets.xcassets */,
 				EDAC85AA250C06BE00D48B1A /* Info.plist */,
 				EDAC85A7250C06BE00D48B1A /* Preview Content */,
@@ -65,6 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				EDAC85A8250C06BE00D48B1A /* Preview Assets.xcassets */,
+				EDAC85C2250C102600D48B1A /* SampleAppReducer.swift */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
@@ -85,6 +105,12 @@
 			dependencies = (
 			);
 			name = Latency;
+			packageProductDependencies = (
+				EDAC85B4250C071B00D48B1A /* ComposableArchitecture */,
+				EDAC85B6250C071B00D48B1A /* ComposableCoreLocation */,
+				EDAC85BE250C0A8B00D48B1A /* AlgoliaSearchClient */,
+				EDC5CC32250C406100B0CAF4 /* SpeedTestKit */,
+			);
 			productName = Latency;
 			productReference = EDAC859E250C06BE00D48B1A /* Latency.app */;
 			productType = "com.apple.product-type.application";
@@ -112,6 +138,11 @@
 				Base,
 			);
 			mainGroup = EDAC8595250C06BE00D48B1A;
+			packageReferences = (
+				EDAC85B3250C071B00D48B1A /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				EDAC85BD250C0A8B00D48B1A /* XCRemoteSwiftPackageReference "algoliasearch-client-swift" */,
+				EDC5CC31250C406100B0CAF4 /* XCRemoteSwiftPackageReference "speed-test-kit" */,
+			);
 			productRefGroup = EDAC859F250C06BE00D48B1A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -138,7 +169,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EDAC85A4250C06BE00D48B1A /* ContentView.swift in Sources */,
+				EDAC85B9250C072F00D48B1A /* AppReducer.swift in Sources */,
+				EDAC85C1250C0C3800D48B1A /* ScanView.swift in Sources */,
+				EDAC85A4250C06BE00D48B1A /* SearchView.swift in Sources */,
+				EDC5CC30250C30DE00B0CAF4 /* LocationManagerReducer.swift in Sources */,
+				EDAC85C3250C102600D48B1A /* SampleAppReducer.swift in Sources */,
 				EDAC85A2250C06BE00D48B1A /* LatencyApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -328,6 +363,56 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		EDAC85B3250C071B00D48B1A /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		EDAC85BD250C0A8B00D48B1A /* XCRemoteSwiftPackageReference "algoliasearch-client-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/joeblau/algoliasearch-client-swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		EDC5CC31250C406100B0CAF4 /* XCRemoteSwiftPackageReference "speed-test-kit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:joeblau/speed-test-kit.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		EDAC85B4250C071B00D48B1A /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EDAC85B3250C071B00D48B1A /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+		EDAC85B6250C071B00D48B1A /* ComposableCoreLocation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EDAC85B3250C071B00D48B1A /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableCoreLocation;
+		};
+		EDAC85BE250C0A8B00D48B1A /* AlgoliaSearchClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EDAC85BD250C0A8B00D48B1A /* XCRemoteSwiftPackageReference "algoliasearch-client-swift" */;
+			productName = AlgoliaSearchClient;
+		};
+		EDC5CC32250C406100B0CAF4 /* SpeedTestKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EDC5CC31250C406100B0CAF4 /* XCRemoteSwiftPackageReference "speed-test-kit" */;
+			productName = SpeedTestKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EDAC8596250C06BE00D48B1A /* Project object */;
 }
