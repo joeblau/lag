@@ -80,9 +80,9 @@ struct SearchView: View {
                 .navigationBarItems(trailing:
                                         Button(action: {
                                             viewStore.send(.presentScanner)
-
                                         }, label: {
                                             Text("Scan")
+                                                .padding()
                                         })
                 )
                 .popover(isPresented: viewStore.binding(get: { $0.showScanner }, send: .dismissScanner ), content: {

@@ -103,15 +103,14 @@ struct ScanView: View {
                         .padding()
                     }
                 }
-//                .background(Color.red)
                 .navigationBarTitle("Scan")
                 .navigationBarItems(leading:
                                     Button(action: {
                                         viewStore.send(.forceDismissScanner)
                                     }, label: {
                                         Image(systemName:"xmark")
+                                            .padding()
                                     })
-
                 )
             })
             .onAppear(perform: {
