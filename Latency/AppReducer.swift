@@ -15,6 +15,7 @@ import Contacts
 import CryptoKit
 import SystemConfiguration.CaptiveNetwork
 import Network
+import UIKit
 
 struct GeoLoc: Codable, Equatable {
     var lat: Double
@@ -25,9 +26,14 @@ struct ScanResult: Codable, Equatable {
     var objectID: ObjectID
     var address: String = ""
     var _geoloc: GeoLoc = GeoLoc(lat: 0, lng: 0)
-    var download: String = ""
-    var upload: String = ""
+    var download: String = "-"
+    var downloadRaw: Double = 0.0
+    var downloadUnits: Int = 0
+    var upload: String = "-"
+    var uploadRaw: Double = 0.0
+    var uploadUnits: Int = 0
     var onWiFi: Bool = false
+    var service: String?
 }
 
 struct Latency: Codable {
@@ -77,7 +83,6 @@ struct AppState: Equatable {
     var scanning: ScanningState = .notStarted
     var queryString: String = ""
     var queryResults = [SearchResult]()
-    
     var scanResult = ScanResult(objectID: ObjectID(stringLiteral: UUID().uuidString))
 }
 
@@ -100,6 +105,8 @@ enum AppAction: Equatable {
     case updateAddress(String)
     case updateOnWiFi(Bool)
     case clearQuery
+    
+    case scanViewAppeared
     
     // Lifecycle
     case onActive
@@ -178,6 +185,8 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
         
     case let .updateDownloadScanner(current, average):
         state.scanResult.download = average.description
+        state.scanResult.downloadRaw = average.value
+        state.scanResult.downloadUnits = average.units.rawValue
         break
         
     case .startScannerUpload:
@@ -195,6 +204,8 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
         
     case let .updateUploadScanner(current, average):
         state.scanResult.upload = average.description
+        state.scanResult.uploadRaw = average.value
+        state.scanResult.uploadUnits = average.units.rawValue
         break
         
     case let .updateOnWiFi(onWiFi):
@@ -259,6 +270,14 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
             
         default: break
         }
+        
+        
+    case .scanViewAppeared:
+//        if let clipboard = UIPasteboard.general.string,
+//           let url = URL(string: clipboard) {
+//            print(url.host)
+//        }
+        break
         
     // MARK: - Lifecycle
     

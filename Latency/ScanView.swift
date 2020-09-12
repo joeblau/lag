@@ -20,9 +20,21 @@ struct ScanView: View {
                         Section(footer:
                                     VStack(alignment: .leading) {
                                         Text("Submit a scan at your current location to search.")
+                                        
                                         switch viewStore.scanResult.onWiFi {
-                                        case true: Label("On Wifi", systemImage: "wifi").foregroundColor(.green)
-                                        case false: Label("Off Wifi", systemImage: "wifi.slash").foregroundColor(.red)
+                                        case true:
+                                            Label("On Wifi", systemImage: "wifi")
+                                                .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
+                                                .foregroundColor(.white)
+                                                .background(Color.green)
+                                                .clipShape(Capsule(style: .continuous))
+
+                                        case false:
+                                            Label("Off Wifi", systemImage: "wifi.slash")
+                                                .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
+                                                .foregroundColor(.white)
+                                                .background(Color.red)
+                                                .clipShape(Capsule(style: .continuous))
                                         }
                                     }
                             ){}
@@ -101,6 +113,9 @@ struct ScanView: View {
                                     })
 
                 )
+            })
+            .onAppear(perform: {
+                viewStore.send(.scanViewAppeared)
             })
         }
     }
