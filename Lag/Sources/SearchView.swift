@@ -85,10 +85,11 @@ struct SearchView: View {
                                                 .padding()
                                         })
                 )
-                .popover(isPresented: viewStore.binding(get: { $0.showScanner }, send: .dismissScanner ), content: {
+                .sheet(isPresented: viewStore.binding(get: { $0.showScanner }, send: .dismissScanner ), content: {
                     ScanView(store: store)
                 })
             }
+            .navigationViewStyle(StackNavigationViewStyle())
         }
         
     }

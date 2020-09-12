@@ -24,7 +24,9 @@ struct LatencyApp: App {
     
     var body: some Scene {
         WindowGroup {
-            SearchView(store: store)
+            TabView {
+                SearchView(store: store)
+            }
         }
         .onChange(of: scenePhase) { phase in
             switch phase {
