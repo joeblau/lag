@@ -16,5 +16,6 @@ import AlgoliaSearchClient
     let sampleAppStore = Store(initialState: AppState(),
                                reducer: app,
                                environment: AppEnvironment(latencyIndex: SearchClient(appID: "", apiKey: "").index(withName: ""),
-                                                           locationManager: .mock()))
+                                                           locationManager: .mock(),
+                                                           fastManager: .mock()))
 #endif

@@ -20,15 +20,6 @@
         }
       },
       {
-        "package": "speed-test-kit",
-        "repositoryURL": "https://github.com/joeblau/speed-test-kit",
-        "state": {
-          "branch": "master",
-          "revision": "6446bfc49e6eb35eb41685900e6f75942214330a",
-          "version": null
-        }
-      },
-      {
         "package": "swift-case-paths",
         "repositoryURL": "https://github.com/pointfreeco/swift-case-paths",
         "state": {

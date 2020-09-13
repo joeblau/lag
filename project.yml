@@ -18,9 +18,6 @@ packages:
   algolia-search-client:
     url: https://github.com/joeblau/algoliasearch-client-swift
     branch: master
-  speed-test-kit:
-    url: https://github.com/joeblau/speed-test-kit
-    branch: master
 targets:
   Lag:
     type: application
@@ -42,5 +39,3 @@ targets:
         product: ComposableCoreLocation
       - package: algolia-search-client
         product: AlgoliaSearchClient
-      - package: speed-test-kit
-        product: SpeedTestKit

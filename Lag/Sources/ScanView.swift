@@ -66,7 +66,7 @@ struct ScanView: View {
                     switch viewStore.scanning {
                     case .notStarted:
                         Button(action: {
-                            viewStore.send(.startScannerDownload)
+                            viewStore.send(.startTest)
                         }, label: {
                                 Text("Scan")
                                     .font(.headline)

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,17 +12,15 @@
 		0ADA24607EC6F596C63489CE /* ScanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF6BB1F63CB8815ED1D9EC8 /* ScanView.swift */; };
 		26D9446AD5B208470D619C44 /* ComposableCoreLocation in Frameworks */ = {isa = PBXBuildFile; productRef = 57F13C01630BBA728A5D561F /* ComposableCoreLocation */; };
 		30796D31F9B13D6A6ADFD6F9 /* LatencyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F028C3B5A66E45EE6D4873 /* LatencyApp.swift */; };
-		37AD0FF946FC7556A436C64D /* LocationManagerReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00DBE4DF3735153F2202D607 /* LocationManagerReducer.swift */; };
 		4E8A12C8F399DB3124C03233 /* SampleAppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3000A18CA3CAAF5CC46BD75A /* SampleAppReducer.swift */; };
 		539C5CFC47829A60C1BFA0DD /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64042924D9A83F669A285747 /* SearchView.swift */; };
+		96C24B99673E46589492AEF7 /* FastManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD702568A5FABEDC7E4C251 /* FastManager.swift */; };
 		A21D38B1DDF9A1FC3DDFC193 /* AppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8F9676BB23465C3E2ADDA0 /* AppReducer.swift */; };
-		AD618552F7E033A3D777B8C1 /* SpeedTestKit in Frameworks */ = {isa = PBXBuildFile; productRef = 12FC190ACAEF2822F02905A7 /* SpeedTestKit */; };
 		DAD4FECADBAF017143EEA023 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6126502A6F7E387AAC93FD03 /* Assets.xcassets */; };
 		F7E9E4BB2EFAF20D903F602C /* AlgoliaSearchClient in Frameworks */ = {isa = PBXBuildFile; productRef = A29A3DFA9CB77B34EC91F6D6 /* AlgoliaSearchClient */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		00DBE4DF3735153F2202D607 /* LocationManagerReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagerReducer.swift; sourceTree = "<group>"; };
 		3000A18CA3CAAF5CC46BD75A /* SampleAppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleAppReducer.swift; sourceTree = "<group>"; };
 		3E96B4830666B05B70C83B3B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		51F028C3B5A66E45EE6D4873 /* LatencyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LatencyApp.swift; sourceTree = "<group>"; };
@@ -30,7 +28,8 @@
 		6126502A6F7E387AAC93FD03 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		64042924D9A83F669A285747 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		733E9EB7979025080441D8AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		98964698473A9F5C6A30D453 /* Lag.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lag.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7DD702568A5FABEDC7E4C251 /* FastManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastManager.swift; sourceTree = "<group>"; };
+		98964698473A9F5C6A30D453 /* Lag.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Lag.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEF6BB1F63CB8815ED1D9EC8 /* ScanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -42,7 +41,6 @@
 				04C4C3B970A202AE924593CE /* ComposableArchitecture in Frameworks */,
 				26D9446AD5B208470D619C44 /* ComposableCoreLocation in Frameworks */,
 				F7E9E4BB2EFAF20D903F602C /* AlgoliaSearchClient in Frameworks */,
-				AD618552F7E033A3D777B8C1 /* SpeedTestKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +61,14 @@
 				B2A51D1B817FF96AEC694105 /* Lag */,
 				0EDF5D79E9EE1DA0E315E776 /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		74ED85C222481AB1E9101C05 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				7DD702568A5FABEDC7E4C251 /* FastManager.swift */,
+			);
+			path = Manager;
 			sourceTree = "<group>";
 		};
 		77548685DDD75E3F9F7C73D5 /* Resources */ = {
@@ -98,9 +104,9 @@
 			children = (
 				5A8F9676BB23465C3E2ADDA0 /* AppReducer.swift */,
 				51F028C3B5A66E45EE6D4873 /* LatencyApp.swift */,
-				00DBE4DF3735153F2202D607 /* LocationManagerReducer.swift */,
 				EEF6BB1F63CB8815ED1D9EC8 /* ScanView.swift */,
 				64042924D9A83F669A285747 /* SearchView.swift */,
+				74ED85C222481AB1E9101C05 /* Manager */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -111,6 +117,14 @@
 				733E9EB7979025080441D8AC /* Info.plist */,
 			);
 			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		"TEMP_DAF17EE6-75B7-4DDF-8AD6-28762DF7EC39" /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				6126502A6F7E387AAC93FD03 /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -133,7 +147,6 @@
 				4B6417C2DE3DDEA5D97810BC /* ComposableArchitecture */,
 				57F13C01630BBA728A5D561F /* ComposableCoreLocation */,
 				A29A3DFA9CB77B34EC91F6D6 /* AlgoliaSearchClient */,
-				12FC190ACAEF2822F02905A7 /* SpeedTestKit */,
 			);
 			productName = Lag;
 			productReference = 98964698473A9F5C6A30D453 /* Lag.app */;
@@ -162,7 +175,6 @@
 			mainGroup = 5C13F48C539B9F2816BFC49D;
 			packageReferences = (
 				86FEB583792A94773E2677D3 /* XCRemoteSwiftPackageReference "algoliasearch-client-swift" */,
-				450B6AFD7B30B3B2E1FAE180 /* XCRemoteSwiftPackageReference "speed-test-kit" */,
 				C457AEB127CA3D1FA27CF3A6 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 			);
 			projectDirPath = "";
@@ -191,8 +203,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A21D38B1DDF9A1FC3DDFC193 /* AppReducer.swift in Sources */,
+				96C24B99673E46589492AEF7 /* FastManager.swift in Sources */,
 				30796D31F9B13D6A6ADFD6F9 /* LatencyApp.swift in Sources */,
-				37AD0FF946FC7556A436C64D /* LocationManagerReducer.swift in Sources */,
 				4E8A12C8F399DB3124C03233 /* SampleAppReducer.swift in Sources */,
 				0ADA24607EC6F596C63489CE /* ScanView.swift in Sources */,
 				539C5CFC47829A60C1BFA0DD /* SearchView.swift in Sources */,
@@ -333,7 +345,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.joeblau.Lag;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -351,7 +362,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.joeblau.Lag;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -382,14 +392,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		450B6AFD7B30B3B2E1FAE180 /* XCRemoteSwiftPackageReference "speed-test-kit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/joeblau/speed-test-kit";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
 		86FEB583792A94773E2677D3 /* XCRemoteSwiftPackageReference "algoliasearch-client-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/joeblau/algoliasearch-client-swift";
@@ -409,11 +411,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		12FC190ACAEF2822F02905A7 /* SpeedTestKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 450B6AFD7B30B3B2E1FAE180 /* XCRemoteSwiftPackageReference "speed-test-kit" */;
-			productName = SpeedTestKit;
-		};
 		4B6417C2DE3DDEA5D97810BC /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C457AEB127CA3D1FA27CF3A6 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;

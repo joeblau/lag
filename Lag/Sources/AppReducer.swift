@@ -10,7 +10,6 @@ import Combine
 import ComposableArchitecture
 import ComposableCoreLocation
 import AlgoliaSearchClient
-import SpeedTestKit
 import Contacts
 import CryptoKit
 import SystemConfiguration.CaptiveNetwork
@@ -45,13 +44,6 @@ struct SearchResult: Equatable, Hashable {
     var address: String = "-"
     var download: String = "-"
     var upload: String = "-"
-}
-
-extension Speed: Equatable {
-    public static func == (lhs: Speed, rhs: Speed) -> Bool {
-        lhs.units == rhs.units
-            && lhs.value == rhs.value
-    }
 }
 
 extension CLLocationCoordinate2D: Equatable {
@@ -89,16 +81,14 @@ struct AppState: Equatable {
 
 enum AppAction: Equatable {
     case locationManager(LocationManager.Action)
-    
+    case fastManager(FastManager.Action)
+
     case presentScanner
     case forceDismissScanner
     case dismissScanner
-    case startScannerDownload
-    case startScannerUpload
     case startSaveResults
     case saveCompleted
-    case updateDownloadScanner(Speed, Speed)
-    case updateUploadScanner(Speed, Speed)
+    case startTest
     case setIsEditing(Bool)
     case updateQuery(String)
     case updateResults([SearchResult])
@@ -121,13 +111,13 @@ enum AppAction: Equatable {
 struct AppEnvironment {
     let latencyIndex: Index
     let locationManager: LocationManager
-    let downloadService = CustomHostDownloadService()
-    let uploadService = CustomHostUploadService()
+    let fastManager: FastManager
     let geocoder = CLGeocoder()
     let nwPathMonitor = NWPathMonitor()
 }
 
 struct LocationManagerId: Hashable {}
+struct FastManagerId: Hashable {}
 
 let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environment in
     switch action {
@@ -168,45 +158,9 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
         state.queryString = ""
         state.queryResults = [SearchResult]()
         
-    case .startScannerDownload:
+    case .startTest:
         state.scanning = .started
-        return Effect.run { subscriber in
-            environment.downloadService.test(URL(string: "http://test.byfly.by/speedtest/upload.php")!,
-                                             fileSize: 10000000,
-                                             timeout: 30,
-                                             current: { (current, average) in
-                                                subscriber.send(.updateDownloadScanner(current, average))
-                                             }, final: { result in
-                                                subscriber.send(.startScannerUpload)
-                                             })
-            return AnyCancellable {}
-        }
-        
-        
-    case let .updateDownloadScanner(current, average):
-        state.scanResult.download = average.description
-        state.scanResult.downloadRaw = average.value
-        state.scanResult.downloadUnits = average.units.rawValue
-        break
-        
-    case .startScannerUpload:
-        return Effect.run { subscriber in
-            environment.uploadService.test(URL(string: "http://test.byfly.by/speedtest/upload.php")!,
-                                           fileSize: 10000000,
-                                           timeout: 30,
-                                           current: { (current, average) in
-                                            subscriber.send(.updateUploadScanner(current, average))
-                                           }, final: { result in
-                                            subscriber.send(.startSaveResults)
-                                           })
-            return AnyCancellable {}
-        }
-        
-    case let .updateUploadScanner(current, average):
-        state.scanResult.upload = average.description
-        state.scanResult.uploadRaw = average.value
-        state.scanResult.uploadUnits = average.units.rawValue
-        break
+        return environment.fastManager.startTest(id: FastManagerId()).fireAndForget()
         
     case let .updateOnWiFi(onWiFi):
         state.scanResult.onWiFi = onWiFi
@@ -270,7 +224,35 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
             
         default: break
         }
-        
+    
+    case let .fastManager(action):
+        switch action {
+        case let .didReceive(message: message):
+            guard let body = message.body as? NSDictionary,
+                  let type = body["type"] as? String,
+                  let units = body["units"] as? String,
+                  let value = body["value"] as? String else { break }
+
+            
+            switch type {
+            case "down":
+                state.scanResult.download = "\(value) \(units)"
+                state.scanResult.downloadRaw = Double(value) ?? 0.0
+                state.scanResult.downloadUnits = Units(rawValue: units)?.integer ?? -1
+            case "down-done":
+                print("lock it")
+                
+            case "up":
+                state.scanResult.upload = "\(value) \(units)"
+                state.scanResult.uploadRaw = Double(value) ?? 0.0
+                state.scanResult.uploadUnits = Units(rawValue: units)?.integer ?? -1
+            case "up-done":
+                return Effect(value: .startSaveResults)
+            default: break
+            }
+            
+        }
+        break
         
     case .scanViewAppeared:
 //        if let clipboard = UIPasteboard.general.string,
@@ -284,6 +266,7 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
     case .onActive:
         return .merge(
             environment.locationManager.create(id: LocationManagerId()).map(AppAction.locationManager),
+            environment.fastManager.create(id: FastManagerId()).map(AppAction.fastManager),
             Effect(value: AppAction.startLocationManager),
             Effect.run { subscriber in
                 environment.nwPathMonitor.start(queue: .main)
@@ -300,6 +283,7 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
     case .onBackground:
         return .merge(
             Effect(value: AppAction.stopLocationManager),
+            environment.fastManager.destroy(id: FastManagerId()).fireAndForget(),
             environment.locationManager.destroy(id: LocationManagerId()).fireAndForget()
         )
         
@@ -348,3 +332,29 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
 .combined(with: locationManager.pullback(state: \.self,
                                          action: /AppAction.locationManager,
                                          environment: { $0 }))
+.combined(with: fastManager.pullback(state: \.self,
+                                         action: /AppAction.fastManager,
+                                         environment: { $0 }))
+
+let locationManager = Reducer<AppState, LocationManager.Action, AppEnvironment> { _, _, _ in
+    return .none
+}
+
+let fastManager = Reducer<AppState, FastManager.Action, AppEnvironment> { state, action, _ in
+    return .none
+}
+
+
+enum Units: String {
+    case Kbps
+    case Mbps
+    case Gbps
+    
+    var integer: Int {
+        switch self {
+        case .Kbps: return 0
+        case .Mbps: return 1
+        case .Gbps: return 2
+        }
+    }
+}

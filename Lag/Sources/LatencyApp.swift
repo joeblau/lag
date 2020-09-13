@@ -20,7 +20,8 @@ struct LatencyApp: App {
                                            reducer: app,
                                            environment: AppEnvironment(latencyIndex: SearchClient(appID: "IYADMQFILK", apiKey: "5cc77b4a1a6f08aaeffa9130bf0917d5")
                                                                         .index(withName: "prod_LATENCY"),
-                                                                       locationManager: .live))
+                                                                       locationManager: .live,
+                                                                       fastManager: .live))
     
     var body: some Scene {
         WindowGroup {
