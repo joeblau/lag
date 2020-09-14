@@ -15,6 +15,7 @@ import CryptoKit
 import SystemConfiguration.CaptiveNetwork
 import Network
 import UIKit
+import MapKit
 
 struct GeoLoc: Codable, Equatable {
     var lat: Double
@@ -23,16 +24,17 @@ struct GeoLoc: Codable, Equatable {
 
 struct ScanResult: Codable, Equatable {
     var objectID: ObjectID
-    var address: String = ""
-    var _geoloc: GeoLoc = GeoLoc(lat: 0, lng: 0)
-    var download: String = "-"
+    var address: String? = nil
+    var _geoloc: GeoLoc? = nil
+    var download: String? = nil
     var downloadRaw: Double = 0.0
     var downloadUnits: Int = 0
-    var upload: String = "-"
+    var upload: String? = nil
     var uploadRaw: Double = 0.0
     var uploadUnits: Int = 0
     var onWiFi: Bool = false
-    var service: String?
+    var pointOfInterest: String?
+    var pointOfInterestDescription: String?
 }
 
 struct Latency: Codable {
@@ -56,7 +58,7 @@ extension CLLocationCoordinate2D: Equatable {
 extension Digest {
     var bytes: [UInt8] { Array(makeIterator()) }
     var data: Data { Data(bytes) }
-
+    
     var hexStr: String {
         bytes.map { String(format: "%02X", $0) }.joined()
     }
@@ -70,21 +72,22 @@ enum ScanningState: Equatable {
 }
 
 struct AppState: Equatable {
-    var showScanner: Bool = true
+    var showScanner: Bool = false
     var isEditing: Bool = false
     var scanning: ScanningState = .notStarted
     var queryString: String = ""
     var queryResults = [SearchResult]()
     var scanResult = ScanResult(objectID: ObjectID(stringLiteral: UUID().uuidString))
+    var autoPresentCount = 0
+    var establishmentPickerIndex = 0
 }
 
 
 enum AppAction: Equatable {
     case locationManager(LocationManager.Action)
     case fastManager(FastManager.Action)
-
+    
     case presentScanner
-    case forceDismissScanner
     case dismissScanner
     case startSaveResults
     case saveCompleted
@@ -94,13 +97,12 @@ enum AppAction: Equatable {
     case updateResults([SearchResult])
     case updateAddress(String)
     case updateOnWiFi(Bool)
+    case updateNearestPointOfInterest(String?, String?)
     case clearQuery
-    
-    case scanViewAppeared
-    
+    case setEstablishment(Int)
+
     // Lifecycle
     case onActive
-    case onInactive
     case onBackground
     
     // Location Manager
@@ -123,6 +125,7 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
     switch action {
     case .presentScanner:
         state.showScanner = true
+        return .none
         
     case let .updateQuery(query):
         state.queryString = query
@@ -136,8 +139,8 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
                               let download = hit.object["download"]?.object() as? String,
                               let upload = hit.object["upload"]?.object() as? String else { return nil }
                         return SearchResult(address: address,
-                                     download: download,
-                                     upload: upload)
+                                            download: download,
+                                            upload: upload)
                     }
                     
                     completion(.success(.updateResults(results)))
@@ -149,14 +152,17 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
         
     case let .setIsEditing(isEditing):
         state.isEditing = isEditing
+        return .none
         
     case let .updateResults(results):
         state.queryResults = results
-            
+        return .none
+        
     case .clearQuery:
         state.isEditing = false
         state.queryString = ""
         state.queryResults = [SearchResult]()
+        return .none
         
     case .startTest:
         state.scanning = .started
@@ -164,10 +170,19 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
         
     case let .updateOnWiFi(onWiFi):
         state.scanResult.onWiFi = onWiFi
+        return .none
         
     case .startSaveResults:
-        guard let data = state.scanResult.address.data(using: .utf8) else { return .none }
+        guard let data = state.scanResult.address?.data(using: .utf8) else { return .none }
         let digest = Insecure.SHA1.hash(data: data)
+        
+        switch UserDefaults.standard.array(forKey: Constants.scannedLocationsKey) as? [String] {
+        case var .some(scannedLocations):
+            scannedLocations.append(digest.hexStr)
+            UserDefaults.standard.setValue(scannedLocations, forKey: Constants.scannedLocationsKey)
+        case .none:
+            UserDefaults.standard.setValue([digest.hexStr], forKey: Constants.scannedLocationsKey)
+        }
 
         state.scanning = .completed
         state.scanResult.objectID = ObjectID(stringLiteral: digest.hexStr)
@@ -186,24 +201,80 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
         
     case .saveCompleted:
         state.scanning = .saved
-        break
+        return .none
+        
+    case let .setEstablishment(index):
+        state.establishmentPickerIndex = index
+        
+        guard let category = Constants.pointsOfInterest[index].category,
+              let coordinate = state.scanResult._geoloc else { return Effect(value: .updateNearestPointOfInterest(nil, nil)) }
+        
+        let searchRequest = MKLocalSearch.Request()
+        searchRequest.naturalLanguageQuery = Constants.pointsOfInterest[index].name
+        searchRequest.pointOfInterestFilter = MKPointOfInterestFilter(including: [category])
+        searchRequest.region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: coordinate.lat,
+                                                                                 longitude: coordinate.lng),
+                                           latitudinalMeters: 50,
+                                           longitudinalMeters: 50)
+
+        let myLocation = CLLocation(latitude: coordinate.lat, longitude: coordinate.lng)
+        
+        return .future { completion in
+            let search = MKLocalSearch(request: searchRequest)
+            search.start { (response, error) in
+                guard let items = response?.mapItems.filter({ $0.name != nil && $0.placemark.location != nil }) else { return }
+                var currentDistance: Double = Double.greatestFiniteMagnitude
+                var closestItem: MKMapItem?
+                
+                for item in items {
+                    guard let location = item.placemark.location else { continue }
+                    let itemDistance = myLocation.distance(from: location)
+                    if itemDistance < currentDistance {
+                        closestItem = item
+                        currentDistance = itemDistance
+                    }
+                }
+                
+                guard let poiName = closestItem?.name,
+                      let address = closestItem?.placemark.address else { return }
+                completion(.success(.updateNearestPointOfInterest(poiName, address)))
+            }
+        }
+        
+    case let .updateNearestPointOfInterest(poi, address):
+        state.scanResult.pointOfInterest = poi
+        state.scanResult.pointOfInterestDescription = state.establishmentPickerIndex == 0 ? nil : Constants.pointsOfInterest[state.establishmentPickerIndex].name
+        switch address {
+        case let .some(address): return Effect(value: .updateAddress(address))
+        case .none: return .none
+        }
         
     case let .updateAddress(address):
+        guard state.scanning == .notStarted else { return .none }
+        
         state.scanResult.address = address
-        break
-
-    case .forceDismissScanner:
-        state.showScanner = false
-        return Effect(value: AppAction.dismissScanner)
+        
+        guard let data = state.scanResult.address?.data(using: .utf8) else { return .none }
+        let digest = Insecure.SHA1.hash(data: data)
+        
+        if state.autoPresentCount == 0 {
+            state.showScanner = UserDefaults.standard
+                .array(forKey: Constants.scannedLocationsKey)?
+                .compactMap({ $0 as? String})
+                .contains(digest.hexStr) ?? true
+        }
+        state.autoPresentCount = state.autoPresentCount + 1
+        return .none
         
     case .dismissScanner:
+        state.showScanner = false
         state.scanning = .notStarted
-        break
+        return .none
         
     case let .locationManager(action):
         switch action {
         case let .didUpdateLocations(locations):
-            guard let location = locations.last?.rawValue else { break }
+            guard let location = locations.last?.rawValue else {  return .none }
             
             state.scanResult._geoloc = GeoLoc(lat: location.coordinate.latitude,
                                               lng: location.coordinate.longitude)
@@ -212,54 +283,45 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
                 environment.geocoder
                     .reverseGeocodeLocation(location, completionHandler: { (placemarks, error) in
                         guard error == nil,
-                              let postalAddress = placemarks?.first?.postalAddress else { return }
-                        
-                        let postalAddressFormatter = CNPostalAddressFormatter()
-                        postalAddressFormatter.style = .mailingAddress
-                        let address = postalAddressFormatter.string(from: postalAddress)
-                        
+                              let address = placemarks?.first?.address else { return }
                         completion(.success(.updateAddress(address)))
                     })
             }
             
-        default: break
+        default:
+            return .none
         }
-    
+        
     case let .fastManager(action):
         switch action {
         case let .didReceive(message: message):
             guard let body = message.body as? NSDictionary,
                   let type = body["type"] as? String,
                   let units = body["units"] as? String,
-                  let value = body["value"] as? String else { break }
-
+                  let value = body["value"] as? String else {  return .none }
             
             switch type {
             case "down":
                 state.scanResult.download = "\(value) \(units)"
                 state.scanResult.downloadRaw = Double(value) ?? 0.0
                 state.scanResult.downloadUnits = Units(rawValue: units)?.integer ?? -1
+                return .none
+
             case "down-done":
-                print("lock it")
+                return .none
                 
             case "up":
                 state.scanResult.upload = "\(value) \(units)"
                 state.scanResult.uploadRaw = Double(value) ?? 0.0
                 state.scanResult.uploadUnits = Units(rawValue: units)?.integer ?? -1
+                return .none
+
             case "up-done":
                 return Effect(value: .startSaveResults)
-            default: break
+            default:
+                return .none
             }
-            
         }
-        break
-        
-    case .scanViewAppeared:
-//        if let clipboard = UIPasteboard.general.string,
-//           let url = URL(string: clipboard) {
-//            print(url.host)
-//        }
-        break
         
     // MARK: - Lifecycle
     
@@ -277,8 +339,6 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
                 return AnyCancellable {}
             }
         )
-    case .onInactive:
-        break
         
     case .onBackground:
         return .merge(
@@ -303,7 +363,7 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
                          activityType: .none,
                          allowsBackgroundLocationUpdates: false,
                          desiredAccuracy: kCLLocationAccuracyBest,
-                         distanceFilter: nil,
+                         distanceFilter: 20,
                          headingFilter: 8,
                          headingOrientation: .faceUp,
                          pausesLocationUpdatesAutomatically: true,
@@ -326,24 +386,16 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
             .stopUpdatingLocation(id: LocationManagerId())
             .fireAndForget()
     }
-    
-    return .none
 })
-.combined(with: locationManager.pullback(state: \.self,
-                                         action: /AppAction.locationManager,
-                                         environment: { $0 }))
-.combined(with: fastManager.pullback(state: \.self,
-                                         action: /AppAction.fastManager,
-                                         environment: { $0 }))
 
-let locationManager = Reducer<AppState, LocationManager.Action, AppEnvironment> { _, _, _ in
-    return .none
+extension CLPlacemark {
+    var address: String? {
+        guard let postalAddress = self.postalAddress else { return nil }
+        let postalAddressFormatter = CNPostalAddressFormatter()
+        postalAddressFormatter.style = .mailingAddress
+        return postalAddressFormatter.string(from: postalAddress)
+    }
 }
-
-let fastManager = Reducer<AppState, FastManager.Action, AppEnvironment> { state, action, _ in
-    return .none
-}
-
 
 enum Units: String {
     case Kbps

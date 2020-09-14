@@ -12,15 +12,20 @@
 		0ADA24607EC6F596C63489CE /* ScanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF6BB1F63CB8815ED1D9EC8 /* ScanView.swift */; };
 		26D9446AD5B208470D619C44 /* ComposableCoreLocation in Frameworks */ = {isa = PBXBuildFile; productRef = 57F13C01630BBA728A5D561F /* ComposableCoreLocation */; };
 		30796D31F9B13D6A6ADFD6F9 /* LatencyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F028C3B5A66E45EE6D4873 /* LatencyApp.swift */; };
+		30808C77561AD8A0AAC562DD /* WiFiTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F14F34AD6DF96BC548A51F /* WiFiTagView.swift */; };
+		4C065A00A9490F8BABB6B6BC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E683792C747AE3E06940FDB3 /* Constants.swift */; };
 		4E8A12C8F399DB3124C03233 /* SampleAppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3000A18CA3CAAF5CC46BD75A /* SampleAppReducer.swift */; };
+		4FEC44B101818E352E2AF918 /* ScanDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7A15CFE926DB4D74B3A914 /* ScanDataView.swift */; };
 		539C5CFC47829A60C1BFA0DD /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64042924D9A83F669A285747 /* SearchView.swift */; };
 		96C24B99673E46589492AEF7 /* FastManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD702568A5FABEDC7E4C251 /* FastManager.swift */; };
 		A21D38B1DDF9A1FC3DDFC193 /* AppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8F9676BB23465C3E2ADDA0 /* AppReducer.swift */; };
 		DAD4FECADBAF017143EEA023 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6126502A6F7E387AAC93FD03 /* Assets.xcassets */; };
+		EDF3330BBCE0B9C31391C8BA /* EstablishmentPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5811168963301379F498881 /* EstablishmentPickerView.swift */; };
 		F7E9E4BB2EFAF20D903F602C /* AlgoliaSearchClient in Frameworks */ = {isa = PBXBuildFile; productRef = A29A3DFA9CB77B34EC91F6D6 /* AlgoliaSearchClient */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1C7A15CFE926DB4D74B3A914 /* ScanDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanDataView.swift; sourceTree = "<group>"; };
 		3000A18CA3CAAF5CC46BD75A /* SampleAppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleAppReducer.swift; sourceTree = "<group>"; };
 		3E96B4830666B05B70C83B3B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		51F028C3B5A66E45EE6D4873 /* LatencyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LatencyApp.swift; sourceTree = "<group>"; };
@@ -30,6 +35,9 @@
 		733E9EB7979025080441D8AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		7DD702568A5FABEDC7E4C251 /* FastManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastManager.swift; sourceTree = "<group>"; };
 		98964698473A9F5C6A30D453 /* Lag.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Lag.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7F14F34AD6DF96BC548A51F /* WiFiTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiFiTagView.swift; sourceTree = "<group>"; };
+		E5811168963301379F498881 /* EstablishmentPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstablishmentPickerView.swift; sourceTree = "<group>"; };
+		E683792C747AE3E06940FDB3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		EEF6BB1F63CB8815ED1D9EC8 /* ScanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -103,9 +111,13 @@
 			isa = PBXGroup;
 			children = (
 				5A8F9676BB23465C3E2ADDA0 /* AppReducer.swift */,
+				E683792C747AE3E06940FDB3 /* Constants.swift */,
+				E5811168963301379F498881 /* EstablishmentPickerView.swift */,
 				51F028C3B5A66E45EE6D4873 /* LatencyApp.swift */,
+				1C7A15CFE926DB4D74B3A914 /* ScanDataView.swift */,
 				EEF6BB1F63CB8815ED1D9EC8 /* ScanView.swift */,
 				64042924D9A83F669A285747 /* SearchView.swift */,
+				B7F14F34AD6DF96BC548A51F /* WiFiTagView.swift */,
 				74ED85C222481AB1E9101C05 /* Manager */,
 			);
 			path = Sources;
@@ -119,7 +131,7 @@
 			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
-		"TEMP_DAF17EE6-75B7-4DDF-8AD6-28762DF7EC39" /* Resources */ = {
+		"TEMP_291507A8-AEFA-425E-8CFC-FCDF2F87B060" /* Resources */ = {
 			isa = PBXGroup;
 			children = (
 				6126502A6F7E387AAC93FD03 /* Assets.xcassets */,
@@ -203,11 +215,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				A21D38B1DDF9A1FC3DDFC193 /* AppReducer.swift in Sources */,
+				4C065A00A9490F8BABB6B6BC /* Constants.swift in Sources */,
+				EDF3330BBCE0B9C31391C8BA /* EstablishmentPickerView.swift in Sources */,
 				96C24B99673E46589492AEF7 /* FastManager.swift in Sources */,
 				30796D31F9B13D6A6ADFD6F9 /* LatencyApp.swift in Sources */,
 				4E8A12C8F399DB3124C03233 /* SampleAppReducer.swift in Sources */,
+				4FEC44B101818E352E2AF918 /* ScanDataView.swift in Sources */,
 				0ADA24607EC6F596C63489CE /* ScanView.swift in Sources */,
 				539C5CFC47829A60C1BFA0DD /* SearchView.swift in Sources */,
+				30808C77561AD8A0AAC562DD /* WiFiTagView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,7 +262,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = K78G42H4U2;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -302,7 +318,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = K78G42H4U2;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

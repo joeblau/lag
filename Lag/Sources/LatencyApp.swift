@@ -25,16 +25,14 @@ struct LatencyApp: App {
     
     var body: some Scene {
         WindowGroup {
-            TabView {
-                SearchView(store: store)
-            }
+            SearchView(store: store)
         }
         .onChange(of: scenePhase) { phase in
             switch phase {
             case .background:
                 ViewStore(store).send(.onBackground)
             case .inactive:
-                ViewStore(store).send(.onInactive)
+                break
             case .active:
                 ViewStore(store).send(.onActive)
             @unknown default:
