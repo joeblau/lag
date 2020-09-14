@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -20,7 +20,7 @@
 		96C24B99673E46589492AEF7 /* FastManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD702568A5FABEDC7E4C251 /* FastManager.swift */; };
 		A21D38B1DDF9A1FC3DDFC193 /* AppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8F9676BB23465C3E2ADDA0 /* AppReducer.swift */; };
 		DAD4FECADBAF017143EEA023 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6126502A6F7E387AAC93FD03 /* Assets.xcassets */; };
-		ED78331E250F2B6200DCF8F4 /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED78331D250F2B6200DCF8F4 /* ResultView.swift */; };
+		E03E4767025C96722B4D8CCC /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C643F93967FE145A628DB63 /* ResultView.swift */; };
 		EDF3330BBCE0B9C31391C8BA /* EstablishmentPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5811168963301379F498881 /* EstablishmentPickerView.swift */; };
 		F7E9E4BB2EFAF20D903F602C /* AlgoliaSearchClient in Frameworks */ = {isa = PBXBuildFile; productRef = A29A3DFA9CB77B34EC91F6D6 /* AlgoliaSearchClient */; };
 /* End PBXBuildFile section */
@@ -30,6 +30,7 @@
 		3000A18CA3CAAF5CC46BD75A /* SampleAppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleAppReducer.swift; sourceTree = "<group>"; };
 		3720F575BA0464463C88BBC5 /* LagApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LagApp.swift; sourceTree = "<group>"; };
 		3E96B4830666B05B70C83B3B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		4C643F93967FE145A628DB63 /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 		5A8F9676BB23465C3E2ADDA0 /* AppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
 		6126502A6F7E387AAC93FD03 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		64042924D9A83F669A285747 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
@@ -39,7 +40,6 @@
 		B7F14F34AD6DF96BC548A51F /* WiFiTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiFiTagView.swift; sourceTree = "<group>"; };
 		E5811168963301379F498881 /* EstablishmentPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstablishmentPickerView.swift; sourceTree = "<group>"; };
 		E683792C747AE3E06940FDB3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		ED78331D250F2B6200DCF8F4 /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 		EEF6BB1F63CB8815ED1D9EC8 /* ScanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -116,12 +116,12 @@
 				E683792C747AE3E06940FDB3 /* Constants.swift */,
 				E5811168963301379F498881 /* EstablishmentPickerView.swift */,
 				3720F575BA0464463C88BBC5 /* LagApp.swift */,
+				4C643F93967FE145A628DB63 /* ResultView.swift */,
 				1C7A15CFE926DB4D74B3A914 /* ScanDataView.swift */,
 				EEF6BB1F63CB8815ED1D9EC8 /* ScanView.swift */,
 				64042924D9A83F669A285747 /* SearchView.swift */,
 				B7F14F34AD6DF96BC548A51F /* WiFiTagView.swift */,
 				74ED85C222481AB1E9101C05 /* Manager */,
-				ED78331D250F2B6200DCF8F4 /* ResultView.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -132,6 +132,14 @@
 				733E9EB7979025080441D8AC /* Info.plist */,
 			);
 			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		"TEMP_78F52FBE-1569-4C99-A724-A368439D500D" /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				6126502A6F7E387AAC93FD03 /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -211,10 +219,10 @@
 			files = (
 				A21D38B1DDF9A1FC3DDFC193 /* AppReducer.swift in Sources */,
 				4C065A00A9490F8BABB6B6BC /* Constants.swift in Sources */,
-				ED78331E250F2B6200DCF8F4 /* ResultView.swift in Sources */,
 				EDF3330BBCE0B9C31391C8BA /* EstablishmentPickerView.swift in Sources */,
 				96C24B99673E46589492AEF7 /* FastManager.swift in Sources */,
 				16209FBC33D61A360D5D4DF1 /* LagApp.swift in Sources */,
+				E03E4767025C96722B4D8CCC /* ResultView.swift in Sources */,
 				4E8A12C8F399DB3124C03233 /* SampleAppReducer.swift in Sources */,
 				4FEC44B101818E352E2AF918 /* ScanDataView.swift in Sources */,
 				0ADA24607EC6F596C63489CE /* ScanView.swift in Sources */,
@@ -258,7 +266,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = K78G42H4U2;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -314,7 +322,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = K78G42H4U2;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

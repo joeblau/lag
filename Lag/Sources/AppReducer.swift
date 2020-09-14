@@ -128,6 +128,12 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
     switch action {
     case .presentScanner:
         state.scanning = .notStarted
+        state.scanResult.download = nil
+        state.scanResult.downloadRaw = 0.0
+        state.scanResult.downloadUnits = 0
+        state.scanResult.upload = nil
+        state.scanResult.uploadRaw = 0.0
+        state.scanResult.uploadUnits = 0
         state.showScanner = true
         return .none
         
