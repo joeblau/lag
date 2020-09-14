@@ -97,7 +97,6 @@ enum AppAction: Equatable {
     case setIsEditing(Bool)
     case updateQuery(String)
     case updateResults([SearchResult])
-    case updateAddress(String)
     case updateOnWiFi(Bool)
     case updateNearestPointOfInterest(String?, String?)
     case reverseGeocode(CLLocation?)
@@ -129,7 +128,6 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
     switch action {
     case .presentScanner:
         state.scanning = .notStarted
-        state.scanResult = ScanResult(objectID: ObjectID(stringLiteral: UUID().uuidString))
         state.showScanner = true
         return .none
         
@@ -251,28 +249,26 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
         }
         
     case let .updateNearestPointOfInterest(poi, address):
-        state.scanResult.pointOfInterest = poi
-        state.scanResult.pointOfInterestDescription = state.establishmentPickerIndex == 0 ? nil : Constants.pointsOfInterest[state.establishmentPickerIndex].name
-        switch address {
-        case let .some(address): return Effect(value: .updateAddress(address))
-        case .none: return .none
-        }
-        
-    case let .updateAddress(address):
         guard state.scanning == .notStarted else { return .none }
         
+        state.scanResult.pointOfInterest = poi
+        state.scanResult.pointOfInterestDescription = state.establishmentPickerIndex == 0 ? nil : Constants.pointsOfInterest[state.establishmentPickerIndex].name
         state.scanResult.address = address
         
         guard let data = state.scanResult.address?.data(using: .utf8) else { return .none }
         let digest = Insecure.SHA1.hash(data: data)
         
-        if state.isUnscannedLocation {
-            state.showScanner = UserDefaults.standard
-                .array(forKey: Constants.scannedLocationsKey)?
-                .compactMap({ $0 as? String})
-                .contains(digest.hexStr) ?? true
-            state.isUnscannedLocation = false
+        guard let scannedLocation = UserDefaults.standard
+                        .array(forKey: Constants.scannedLocationsKey)?
+                        .compactMap({ $0 as? String})
+                        .contains(digest.hexStr),
+              state.isUnscannedLocation else { return .none }
+  
+        if !scannedLocation {
+            state.showScanner = true
         }
+        
+        state.isUnscannedLocation = false
         return .none
         
     case .dismissScanner:
