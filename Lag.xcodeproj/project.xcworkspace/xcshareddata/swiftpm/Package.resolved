@@ -30,11 +30,11 @@
       },
       {
         "package": "swift-composable-architecture",
-        "repositoryURL": "https://github.com/copilotcomputer/swift-composable-architecture",
+        "repositoryURL": "https://github.com/submapco/swift-composable-architecture",
         "state": {
-          "branch": "master",
-          "revision": "c9c1a9a50040408c436e496bac35007add327186",
-          "version": null
+          "branch": null,
+          "revision": "65e2e8aa498785bfa783a01364aa35fe819781ea",
+          "version": "0.8.0"
         }
       },
       {

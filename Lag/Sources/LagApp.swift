@@ -13,7 +13,7 @@ import AlgoliaSearchClient
 let logger = Logger(label: "com.joeblau.Latency")
 
 @main
-struct LatencyApp: App {
+struct LagApp: App {
     @Environment(\.scenePhase) private var scenePhase
 
     let store = Store<AppState, AppAction>(initialState: AppState(),
@@ -32,7 +32,7 @@ struct LatencyApp: App {
             case .background:
                 ViewStore(store).send(.onBackground)
             case .inactive:
-                break
+                ViewStore(store).send(.onInactive)
             case .active:
                 ViewStore(store).send(.onActive)
             @unknown default:

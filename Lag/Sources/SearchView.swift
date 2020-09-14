@@ -55,24 +55,7 @@ struct SearchView: View {
                         }
                     }
                     List(viewStore.queryResults, id: \.self) { result in
-                        HStack {
-                            Text(result.address)
-                            Spacer()
-                            VStack {
-                                Spacer()
-                                HStack {
-                                    Image(systemName: "arrow.up")
-                                    Text("\(result.upload)")
-                                }
-                                Spacer()
-                                HStack {
-                                    Image(systemName: "arrow.down")
-                                    Text("\(result.download)")
-                                }
-                                Spacer()
-                            }
-                            .font(.system(.subheadline, design: .monospaced))
-                        }
+                        ResultView(result: result)
                     }
                     .listStyle(PlainListStyle())
                 }

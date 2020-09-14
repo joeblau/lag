@@ -43,6 +43,7 @@ struct Latency: Codable {
 }
 
 struct SearchResult: Equatable, Hashable {
+    var pointOfInterest: String?
     var address: String = "-"
     var download: String = "-"
     var upload: String = "-"
@@ -78,8 +79,9 @@ struct AppState: Equatable {
     var queryString: String = ""
     var queryResults = [SearchResult]()
     var scanResult = ScanResult(objectID: ObjectID(stringLiteral: UUID().uuidString))
-    var autoPresentCount = 0
+    var isUnscannedLocation = true
     var establishmentPickerIndex = 0
+    var previousLocation: CLLocation? = nil
 }
 
 
@@ -98,11 +100,13 @@ enum AppAction: Equatable {
     case updateAddress(String)
     case updateOnWiFi(Bool)
     case updateNearestPointOfInterest(String?, String?)
+    case reverseGeocode(CLLocation?)
     case clearQuery
     case setEstablishment(Int)
 
     // Lifecycle
     case onActive
+    case onInactive
     case onBackground
     
     // Location Manager
@@ -124,6 +128,8 @@ struct FastManagerId: Hashable {}
 let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environment in
     switch action {
     case .presentScanner:
+        state.scanning = .notStarted
+        state.scanResult = ScanResult(objectID: ObjectID(stringLiteral: UUID().uuidString))
         state.showScanner = true
         return .none
         
@@ -138,7 +144,9 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
                         guard let address = hit.object["address"]?.object() as? String,
                               let download = hit.object["download"]?.object() as? String,
                               let upload = hit.object["upload"]?.object() as? String else { return nil }
-                        return SearchResult(address: address,
+                        
+                        return SearchResult(pointOfInterest: hit.object["pointOfInterest"]?.object() as? String,
+                                            address: address,
                                             download: download,
                                             upload: upload)
                     }
@@ -207,7 +215,8 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
         state.establishmentPickerIndex = index
         
         guard let category = Constants.pointsOfInterest[index].category,
-              let coordinate = state.scanResult._geoloc else { return Effect(value: .updateNearestPointOfInterest(nil, nil)) }
+              let coordinate = state.scanResult._geoloc else {
+            return Effect(value: .reverseGeocode(state.previousLocation)) }
         
         let searchRequest = MKLocalSearch.Request()
         searchRequest.naturalLanguageQuery = Constants.pointsOfInterest[index].name
@@ -257,18 +266,17 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
         guard let data = state.scanResult.address?.data(using: .utf8) else { return .none }
         let digest = Insecure.SHA1.hash(data: data)
         
-        if state.autoPresentCount == 0 {
+        if state.isUnscannedLocation {
             state.showScanner = UserDefaults.standard
                 .array(forKey: Constants.scannedLocationsKey)?
                 .compactMap({ $0 as? String})
                 .contains(digest.hexStr) ?? true
+            state.isUnscannedLocation = false
         }
-        state.autoPresentCount = state.autoPresentCount + 1
         return .none
         
     case .dismissScanner:
         state.showScanner = false
-        state.scanning = .notStarted
         return .none
         
     case let .locationManager(action):
@@ -276,21 +284,29 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
         case let .didUpdateLocations(locations):
             guard let location = locations.last?.rawValue else {  return .none }
             
+            state.previousLocation = location
             state.scanResult._geoloc = GeoLoc(lat: location.coordinate.latitude,
                                               lng: location.coordinate.longitude)
-            
+            return Effect(value: .reverseGeocode(location))
+        default:
+            return .none
+        }
+        
+    case let .reverseGeocode(location):
+        switch location {
+        case let .some(location):
             return .future { completion in
                 environment.geocoder
                     .reverseGeocodeLocation(location, completionHandler: { (placemarks, error) in
                         guard error == nil,
                               let address = placemarks?.first?.address else { return }
-                        completion(.success(.updateAddress(address)))
+                        completion(.success(.updateNearestPointOfInterest(nil, address)))
                     })
             }
-            
-        default:
+        case .none:
             return .none
         }
+
         
     case let .fastManager(action):
         switch action {
@@ -339,6 +355,10 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
                 return AnyCancellable {}
             }
         )
+        
+    case .onInactive:
+        state.isUnscannedLocation = true
+        return .none
         
     case .onBackground:
         return .merge(

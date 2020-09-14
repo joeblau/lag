@@ -59,7 +59,7 @@ struct ScanView: View {
                             Button(action: {
                                 viewStore.send(.startTest)
                             }, label: {
-                                Text("Scan")
+                                Text("Start Scan")
                                     .font(.headline)
                                     .frame(maxWidth: .infinity)
                                     .foregroundColor(.white)
@@ -81,16 +81,26 @@ struct ScanView: View {
                                 .clipShape(Capsule())
                                 .padding()
                             
-                        case .completed, .saved:
+                        case .completed:
+                            Text("Uploading...")
+                                .colorScheme(.dark)
+                                .font(.headline)
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                                .background(Color.blue.opacity(0.7))
+                                .clipShape(Capsule())
+                                .padding()
+                                
+                        case .saved:
                             Button(action: {
                                 viewStore.send(.dismissScanner)
                             }, label: {
-                                Text("Completed")
+                                Text("Close")
                                     .font(.headline)
                                     .frame(maxWidth: .infinity)
                                     .foregroundColor(.white)
                                     .padding()
-                                    .background(viewStore.scanning == .saved ? Color.green : Color.blue)
+                                    .background(Color.blue)
                                     .clipShape(Capsule())
                             })
                             .padding()

@@ -13,8 +13,8 @@ options:
   postGenCommand: .github/scripts/post.sh
 packages:
   swift-composable-architecture:
-    url: https://github.com/copilotcomputer/swift-composable-architecture
-    branch: master
+    url: https://github.com/submapco/swift-composable-architecture
+    from: 0.8.0
   algolia-search-client:
     url: https://github.com/joeblau/algoliasearch-client-swift
     branch: master
