@@ -1,16 +1,13 @@
-//
-//  SampleAppReducer.swift
-//  Latency
-//
-//  Created by Joe Blau on 9/11/20.
-//
+// SampleAppReducer.swift
+// Copyright (c) 2020 Submap
 
-import Foundation
+import AlgoliaSearchClient
 import ComposableArchitecture
 import ComposableCoreLocation
-import AlgoliaSearchClient
+import Foundation
 
 #if DEBUG
+
     // MARK: - Profile
 
     let sampleAppStore = Store(initialState: AppState(),

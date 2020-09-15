@@ -1,13 +1,9 @@
-//
-//  SearchReducer.swift
-//  Lag
-//
-//  Created by Joe Blau on 9/14/20.
-//
+// SearchReducer.swift
+// Copyright (c) 2020 Submap
 
-import Foundation
-import ComposableArchitecture
 import AlgoliaSearchClient
+import ComposableArchitecture
+import Foundation
 
 struct SearchResult: Equatable, Hashable {
     var pointOfInterest: String?
@@ -20,7 +16,7 @@ struct SearchResult: Equatable, Hashable {
 
 struct SearchState: Equatable {
     var scanState = ScanState()
-    
+
     var showScanner: Bool = false
     var queryResults = [SearchResult]()
     var isEditing: Bool = false
@@ -34,10 +30,9 @@ enum SearchAction: Equatable {
     case updateQuery(String)
     case clearQuery
     case updateResults([SearchResult])
-    
+
     // Delegates
     case scanManager(ScanAction)
-    
 }
 
 let searchReducer = Reducer<SearchState, SearchAction, AppEnvironment> { state, action, environment in
@@ -52,57 +47,57 @@ let searchReducer = Reducer<SearchState, SearchAction, AppEnvironment> { state, 
         state.scanState.scanResult.uploadUnits = 0
         state.showScanner = true
         return .none
-        
+
     case let .setIsEditing(isEditing):
         state.isEditing = isEditing
         return .none
-        
+
     case let .updateQuery(query):
         state.queryString = query
-        
+
         return .future { completion in
             environment.latencyIndex.search(query: Query(query)) { result in
                 switch result {
                 case let .success(response):
                     let results = response.hits.compactMap { hit -> SearchResult? in
                         guard let address = hit.object["address"]?.object() as? String,
-                              let download = hit.object["download"]?.object() as? String,
-                              let upload = hit.object["upload"]?.object() as? String else { return nil }
-                        
+                            let download = hit.object["download"]?.object() as? String,
+                            let upload = hit.object["upload"]?.object() as? String else { return nil }
+
                         return SearchResult(pointOfInterest: hit.object["pointOfInterest"]?.object() as? String,
                                             address: address,
                                             download: download,
                                             upload: upload)
                     }
-                    
+
                     completion(.success(.updateResults(results)))
                 case let .failure(error):
                     logger.error("\(error.localizedDescription)")
                 }
             }
         }
-        
+
     case let .updateResults(results):
         state.queryResults = results
         return .none
-        
+
     case .clearQuery:
         state.isEditing = false
         state.queryString = ""
         state.queryResults = [SearchResult]()
         return .none
-        
+
     // MARK: - Delegates
-    
+
     case .dismissScanner,
          .scanManager(.dismissScanner):
         state.showScanner = false
         return .none
-        
+
     default:
         return .none
     }
 }
 .combined(with: scanReducer.pullback(state: \.scanState,
-                                          action: /SearchAction.scanManager,
-                                          environment: { $0 }))
+                                     action: /SearchAction.scanManager,
+                                     environment: { $0 }))

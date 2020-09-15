@@ -1,20 +1,17 @@
-//
-//  SampleScanReducer.swift
-//  Lag
-//
-//  Created by Joe Blau on 9/14/20.
-//
+// SampleScanReducer.swift
+// Copyright (c) 2020 Submap
 
-import Foundation
-import ComposableArchitecture
 import AlgoliaSearchClient
+import ComposableArchitecture
+import Foundation
 
 #if DEBUG
+
     // MARK: - Profile
 
     let sampleScanStore = Store(initialState: ScanState(),
-                               reducer: scanReducer,
-                               environment: AppEnvironment(latencyIndex: SearchClient(appID: "", apiKey: "").index(withName: ""),
-                                                           locationManager: .mock(),
-                                                           fastManager: .mock()))
+                                reducer: scanReducer,
+                                environment: AppEnvironment(latencyIndex: SearchClient(appID: "", apiKey: "").index(withName: ""),
+                                                            locationManager: .mock(),
+                                                            fastManager: .mock()))
 #endif

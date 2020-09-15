@@ -1,12 +1,8 @@
-//
-//  CLPlacemark+Extensions.swift
-//  Lag
-//
-//  Created by Joe Blau on 9/14/20.
-//
+// CLPlacemark+Extensions.swift
+// Copyright (c) 2020 Submap
 
-import CoreLocation
 import Contacts
+import CoreLocation
 
 extension CLPlacemark {
     var address: String? {

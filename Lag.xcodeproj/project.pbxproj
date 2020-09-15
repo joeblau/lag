@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -21,19 +21,18 @@
 		7E213C0E30FB13DB3CB5DBD5 /* ScanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0939A45111909239EE8B6B /* ScanView.swift */; };
 		9D3E65078934785C64ACCB74 /* SearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F1AB96467C4F8F10EDA4D2 /* SearchResultView.swift */; };
 		AD618552F7E033A3D777B8C1 /* ComposableFast in Frameworks */ = {isa = PBXBuildFile; productRef = F5AACA82CABE81E36D3891CC /* ComposableFast */; };
-		B480A94D8655968B1F107168 /* ScanEstablishmentPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0737A99136B15BCA5CE91F9B /* ScanEstablishmentPickerView.swift */; };
+		B53DAC9EB49552E4C3232B4F /* SampleSearchReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DA6EC7B863A43C5C9B748B /* SampleSearchReducer.swift */; };
 		B8EA29987126E645B98718E2 /* CLLocationCoordinate2D+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC750CDFEAB39CA9DACBE82F /* CLLocationCoordinate2D+Extensions.swift */; };
 		D295C0FAEF0694AE680071E4 /* LagApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B6F4A989BEBF02FF264BBB /* LagApp.swift */; };
 		D61CC4E0C5846A6146FD3463 /* ScanDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CDF0538CCA9460EDE92550 /* ScanDataView.swift */; };
 		DAD4FECADBAF017143EEA023 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6126502A6F7E387AAC93FD03 /* Assets.xcassets */; };
 		EA876004887EFE213A62ACAB /* ScanWiFiTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD95E70604E27F32FF828D9F /* ScanWiFiTagView.swift */; };
-		ED3C0FAC2510770B0011E5A4 /* SampleSearchReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3C0FAB2510770B0011E5A4 /* SampleSearchReducer.swift */; };
-		ED3C0FAE251077140011E5A4 /* SampleScanReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3C0FAD251077140011E5A4 /* SampleScanReducer.swift */; };
+		EEF731DC8E1C72B7E6EF8A20 /* ScanEstablishmentPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61D31EE0B38919326CD1E46 /* ScanEstablishmentPickerView.swift */; };
+		F29499669FD282B8642425B1 /* SampleScanReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0969364E2D11F0E60825BF5 /* SampleScanReducer.swift */; };
 		F7E9E4BB2EFAF20D903F602C /* AlgoliaSearchClient in Frameworks */ = {isa = PBXBuildFile; productRef = A29A3DFA9CB77B34EC91F6D6 /* AlgoliaSearchClient */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0737A99136B15BCA5CE91F9B /* ScanEstablishmentPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanEstablishmentPickerView.swift; sourceTree = "<group>"; };
 		3000A18CA3CAAF5CC46BD75A /* SampleAppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleAppReducer.swift; sourceTree = "<group>"; };
 		37F1AB96467C4F8F10EDA4D2 /* SearchResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultView.swift; sourceTree = "<group>"; };
 		3E96B4830666B05B70C83B3B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -47,13 +46,14 @@
 		9380FF50444EF29278CBEB28 /* SearchReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchReducer.swift; sourceTree = "<group>"; };
 		98964698473A9F5C6A30D453 /* Lag.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Lag.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD95E70604E27F32FF828D9F /* ScanWiFiTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanWiFiTagView.swift; sourceTree = "<group>"; };
+		B0969364E2D11F0E60825BF5 /* SampleScanReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleScanReducer.swift; sourceTree = "<group>"; };
 		B5CDF0538CCA9460EDE92550 /* ScanDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanDataView.swift; sourceTree = "<group>"; };
+		C61D31EE0B38919326CD1E46 /* ScanEstablishmentPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanEstablishmentPickerView.swift; sourceTree = "<group>"; };
 		CC750CDFEAB39CA9DACBE82F /* CLLocationCoordinate2D+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+Extensions.swift"; sourceTree = "<group>"; };
 		CD212209B5977831950F0C18 /* ScanReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanReducer.swift; sourceTree = "<group>"; };
 		D53E1A9638027320A5371B75 /* Digest+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Digest+Extensions.swift"; sourceTree = "<group>"; };
 		E683792C747AE3E06940FDB3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		ED3C0FAB2510770B0011E5A4 /* SampleSearchReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleSearchReducer.swift; sourceTree = "<group>"; };
-		ED3C0FAD251077140011E5A4 /* SampleScanReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleScanReducer.swift; sourceTree = "<group>"; };
+		F5DA6EC7B863A43C5C9B748B /* SampleSearchReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleSearchReducer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,8 +109,8 @@
 		9E1A6CF6CE29F5C13A1CDF2D /* Scan */ = {
 			isa = PBXGroup;
 			children = (
-				0737A99136B15BCA5CE91F9B /* ScanEstablishmentPickerView.swift */,
 				B5CDF0538CCA9460EDE92550 /* ScanDataView.swift */,
+				C61D31EE0B38919326CD1E46 /* ScanEstablishmentPickerView.swift */,
 				CD212209B5977831950F0C18 /* ScanReducer.swift */,
 				6E0939A45111909239EE8B6B /* ScanView.swift */,
 				AD95E70604E27F32FF828D9F /* ScanWiFiTagView.swift */,
@@ -123,8 +123,8 @@
 			children = (
 				3E96B4830666B05B70C83B3B /* Preview Assets.xcassets */,
 				3000A18CA3CAAF5CC46BD75A /* SampleAppReducer.swift */,
-				ED3C0FAB2510770B0011E5A4 /* SampleSearchReducer.swift */,
-				ED3C0FAD251077140011E5A4 /* SampleScanReducer.swift */,
+				B0969364E2D11F0E60825BF5 /* SampleScanReducer.swift */,
+				F5DA6EC7B863A43C5C9B748B /* SampleSearchReducer.swift */,
 			);
 			path = PreviewContent;
 			sourceTree = "<group>";
@@ -176,6 +176,14 @@
 				785180120704948FC2C3C125 /* Search */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		"TEMP_56169843-52F6-4BB1-BDED-36E02D9EC7D5" /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				6126502A6F7E387AAC93FD03 /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -260,12 +268,12 @@
 				0C8802F573ABA8994018702A /* CLPlacemark+Extensions.swift in Sources */,
 				4C065A00A9490F8BABB6B6BC /* Constants.swift in Sources */,
 				2EEEE16D20B956DBD5BBFB6B /* Digest+Extensions.swift in Sources */,
-				B480A94D8655968B1F107168 /* ScanEstablishmentPickerView.swift in Sources */,
-				ED3C0FAC2510770B0011E5A4 /* SampleSearchReducer.swift in Sources */,
 				D295C0FAEF0694AE680071E4 /* LagApp.swift in Sources */,
 				4E8A12C8F399DB3124C03233 /* SampleAppReducer.swift in Sources */,
-				ED3C0FAE251077140011E5A4 /* SampleScanReducer.swift in Sources */,
+				F29499669FD282B8642425B1 /* SampleScanReducer.swift in Sources */,
+				B53DAC9EB49552E4C3232B4F /* SampleSearchReducer.swift in Sources */,
 				D61CC4E0C5846A6146FD3463 /* ScanDataView.swift in Sources */,
+				EEF731DC8E1C72B7E6EF8A20 /* ScanEstablishmentPickerView.swift in Sources */,
 				0CD4DECF186153B8288620F0 /* ScanReducer.swift in Sources */,
 				7E213C0E30FB13DB3CB5DBD5 /* ScanView.swift in Sources */,
 				EA876004887EFE213A62ACAB /* ScanWiFiTagView.swift in Sources */,

@@ -1,25 +1,20 @@
-//
-//  ScanView.swift
-//  Latency
-//
-//  Created by Joe Blau on 9/11/20.
-//
+// ScanView.swift
+// Copyright (c) 2020 Submap
 
-import SwiftUI
 import ComposableArchitecture
+import SwiftUI
 
 struct ScanView: View {
     let store: Store<ScanState, ScanAction>
-    
+
     var body: some View {
         WithViewStore(store) { viewStore in
             NavigationView(content: {
-                
                 ZStack {
                     Rectangle()
                         .foregroundColor(Color(.systemGroupedBackground))
                         .ignoresSafeArea()
-                    
+
                     VStack(alignment: .leading) {
                         List {
                             Section(header: Text("Address")) {
@@ -27,7 +22,7 @@ struct ScanView: View {
                                              dataValue: viewStore.scanResult.address ?? Constants.placeholderAddress,
                                              isRedacted: viewStore.scanResult.address == nil)
                             }
-                            
+
                             Section(header: Text("Coordinate")) {
                                 ScanDataView(dataName: "Latitude",
                                              dataValue: viewStore.scanResult._geoloc.flatMap { "\($0.lat)°" } ?? Constants.placeholderCoordinate,
@@ -36,13 +31,13 @@ struct ScanView: View {
                                              dataValue: viewStore.scanResult._geoloc.flatMap { "\($0.lng)°" } ?? Constants.placeholderCoordinate,
                                              isRedacted: viewStore.scanResult._geoloc == nil)
                             }
-                            
+
                             Section(header: Text(viewStore.scanResult.pointOfInterest ?? Constants.placeholderPointOfInterest),
                                     footer: Text(Constants.pointsOfInterest[viewStore.establishmentPickerIndex].name)) {
                                 ScanEstablishmentPickerView(store: store)
                                     .padding(EdgeInsets(top: 0, leading: -10, bottom: 0, trailing: -10))
                             }
-                            
+
                             Section(header: Text("Network Speed")) {
                                 ScanDataView(dataName: "Download",
                                              dataValue: viewStore.scanResult.download ?? Constants.placeholderSpeed,
@@ -53,7 +48,7 @@ struct ScanView: View {
                             }
                         }
                         .listStyle(InsetGroupedListStyle())
-                        
+
                         switch viewStore.scanning {
                         case .notStarted:
                             Button(action: {
@@ -67,9 +62,9 @@ struct ScanView: View {
                                     .background(Color.blue)
                                     .clipShape(Capsule())
                             })
-                            .disabled(!viewStore.scanResult.onWiFi)
-                            .opacity(viewStore.scanResult.onWiFi ? 1.0 : 0.7)
-                            .padding()
+                                .disabled(!viewStore.scanResult.onWiFi)
+                                .opacity(viewStore.scanResult.onWiFi ? 1.0 : 0.7)
+                                .padding()
 
                         case .started:
                             ProgressView()
@@ -103,34 +98,31 @@ struct ScanView: View {
                                     .background(Color.blue)
                                     .clipShape(Capsule())
                             })
-                            .padding()
+                                .padding()
                         }
                     }
                 }
                 .navigationBarTitle("Scan")
                 .navigationBarItems(leading:
-                                        Button(action: {
-                                            viewStore.send(.dismissScanner)
-                                        }, label: {
-                                            Image(systemName:"xmark")
-                                                .padding()
-                                        })
-                                    , trailing:
-                                        ScanWiFiTagView(isWiFiOn: viewStore.scanResult.onWiFi)
-                )
+                    Button(action: {
+                        viewStore.send(.dismissScanner)
+                    }, label: {
+                        Image(systemName: "xmark")
+                            .padding()
+                    }),
+                    trailing:
+                    ScanWiFiTagView(isWiFiOn: viewStore.scanResult.onWiFi))
             })
         }
     }
 }
 
 #if DEBUG
-struct ScanView_Previews: PreviewProvider {
-    static var previews: some View {
-        ScanView(store: sampleScanStore)
-        ScanView(store: sampleScanStore)
-            .preferredColorScheme(.dark)
+    struct ScanView_Previews: PreviewProvider {
+        static var previews: some View {
+            ScanView(store: sampleScanStore)
+            ScanView(store: sampleScanStore)
+                .preferredColorScheme(.dark)
+        }
     }
-}
 #endif
-
-

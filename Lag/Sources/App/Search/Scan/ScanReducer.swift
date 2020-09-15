@@ -1,14 +1,10 @@
-//
-//  ScanReducer.swift
-//  Lag
-//
-//  Created by Joe Blau on 9/14/20.
-//
+// ScanReducer.swift
+// Copyright (c) 2020 Submap
 
-import Foundation
-import ComposableArchitecture
 import AlgoliaSearchClient
+import ComposableArchitecture
 import CryptoKit
+import Foundation
 
 enum ScanningState: Equatable {
     case notStarted
@@ -50,16 +46,16 @@ enum ScanAction: Equatable {
 }
 
 let scanReducer = Reducer<ScanState, ScanAction, AppEnvironment> { state, action, environment in
-    
+
     switch action {
     case .startTest:
         state.scanning = .started
         return environment.fastManager.startTest(id: FastManagerId()).fireAndForget()
-    
+
     case .startSaveResults:
         guard let data = state.scanResult.address?.data(using: .utf8) else { return .none }
         let digest = Insecure.SHA1.hash(data: data)
-        
+
         switch UserDefaults.standard.array(forKey: Constants.scannedLocationsKey) as? [String] {
         case var .some(scannedLocations):
             scannedLocations.append(digest.hexStr)
@@ -71,26 +67,26 @@ let scanReducer = Reducer<ScanState, ScanAction, AppEnvironment> { state, action
         state.scanning = .completed
         state.scanResult.objectID = ObjectID(stringLiteral: digest.hexStr)
         let scanResults = [state.scanResult]
-        
+
         #if targetEnvironment(simulator)
-        return Effect(value: .saveCompleted)
+            return Effect(value: .saveCompleted)
         #else
-        return .future { completion in
-            environment.latencyIndex.saveObjects(scanResults, autoGeneratingObjectID: true) { result in
-                switch result {
-                case let .success(response):
-                    completion(.success(.saveCompleted))
-                case let .failure(error):
-                    logger.error("\(error.localizedDescription)")
+            return .future { completion in
+                environment.latencyIndex.saveObjects(scanResults, autoGeneratingObjectID: true) { result in
+                    switch result {
+                    case let .success(response):
+                        completion(.success(.saveCompleted))
+                    case let .failure(error):
+                        logger.error("\(error.localizedDescription)")
+                    }
                 }
             }
-        }
         #endif
-        
+
     case .saveCompleted:
         state.scanning = .saved
         return .none
-                
+
     default:
         return .none
     }

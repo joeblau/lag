@@ -1,9 +1,5 @@
-//
-//  Constants.swift
-//  Lag
-//
-//  Created by Joe Blau on 9/13/20.
-//
+// Constants.swift
+// Copyright (c) 2020 Submap
 
 import Foundation
 import MapKit
@@ -25,7 +21,7 @@ struct Constants {
     United States
     """
     static var placeholderCoordinate = "0.000000°"
-    static var placeholderSpeed =  "0.0 Kbps"
+    static var placeholderSpeed = "0.0 Kbps"
     static var placeholderPointOfInterest = "-"
     static var pointsOfInterest = [PointOfInterest(emoji: "🚫", name: "Not Point of Interest", category: nil),
                                    PointOfInterest(emoji: "🏠", name: "Rental (Airbnb, Vrbo, HomeAway)", category: nil),

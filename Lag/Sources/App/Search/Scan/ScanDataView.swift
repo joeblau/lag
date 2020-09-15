@@ -1,9 +1,5 @@
-//
-//  ScanDataView.swift
-//  Lag
-//
-//  Created by Joe Blau on 9/13/20.
-//
+// ScanDataView.swift
+// Copyright (c) 2020 Submap
 
 import SwiftUI
 
@@ -11,20 +7,20 @@ struct ScanDataView: View {
     let dataName: String?
     let dataValue: String
     let isRedacted: Bool
-    
-        var body: some View {
-            HStack {
-                if let name = dataName {
-                    Text(name)
-                    Spacer()
-                }
-                switch isRedacted {
-                case true: Text(dataValue).redacted(reason: .placeholder)
-                case false: Text(dataValue)
-                }
+
+    var body: some View {
+        HStack {
+            if let name = dataName {
+                Text(name)
+                Spacer()
             }
-            .font(.system(.subheadline, design: .monospaced))
+            switch isRedacted {
+            case true: Text(dataValue).redacted(reason: .placeholder)
+            case false: Text(dataValue)
+            }
         }
+        .font(.system(.subheadline, design: .monospaced))
+    }
 }
 
 struct ScanDataView_Previews: PreviewProvider {
@@ -35,4 +31,3 @@ struct ScanDataView_Previews: PreviewProvider {
             .previewLayout(.fixed(width: 320, height: 60))
     }
 }
-

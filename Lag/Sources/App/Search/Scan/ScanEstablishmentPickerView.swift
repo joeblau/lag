@@ -1,12 +1,8 @@
-//
-//  EstablishmentTypePickerView.swift
-//  Lag
-//
-//  Created by Joe Blau on 9/13/20.
-//
+// ScanEstablishmentPickerView.swift
+// Copyright (c) 2020 Submap
 
-import SwiftUI
 import ComposableArchitecture
+import SwiftUI
 
 struct ScanEstablishmentPickerView: View {
     let store: Store<ScanState, ScanAction>
@@ -27,9 +23,9 @@ struct ScanEstablishmentPickerView: View {
 }
 
 #if DEBUG
-struct ScanEstablishmentPickerView_Previews: PreviewProvider {
-    static var previews: some View {
-        ScanEstablishmentPickerView(store: sampleScanStore)
+    struct ScanEstablishmentPickerView_Previews: PreviewProvider {
+        static var previews: some View {
+            ScanEstablishmentPickerView(store: sampleScanStore)
+        }
     }
-}
 #endif

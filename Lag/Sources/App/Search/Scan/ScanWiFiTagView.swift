@@ -1,17 +1,12 @@
-//
-//  WiFiTagView.swift
-//  Lag
-//
-//  Created by Joe Blau on 9/13/20.
-//
+// ScanWiFiTagView.swift
+// Copyright (c) 2020 Submap
 
 import SwiftUI
 
 struct ScanWiFiTagView: View {
     let isWiFiOn: Bool
-    
+
     var body: some View {
-        
         switch isWiFiOn {
         case true:
             Label("On Wifi", systemImage: "wifi")
@@ -19,7 +14,7 @@ struct ScanWiFiTagView: View {
                 .foregroundColor(.white)
                 .background(Color.green)
                 .clipShape(Capsule(style: .continuous))
-            
+
         case false:
             Label("Off Wifi", systemImage: "wifi.slash")
                 .padding(EdgeInsets(top: 4, leading: 14, bottom: 4, trailing: 16))
@@ -31,12 +26,12 @@ struct ScanWiFiTagView: View {
 }
 
 #if DEBUG
-struct ScanWiFiTagView_Previews: PreviewProvider {
-    static var previews: some View {
-        ScanWiFiTagView(isWiFiOn: true)
-            .previewLayout(.fixed(width: 200, height: 40))
-        ScanWiFiTagView(isWiFiOn: false)
-            .previewLayout(.fixed(width: 200, height: 40))
+    struct ScanWiFiTagView_Previews: PreviewProvider {
+        static var previews: some View {
+            ScanWiFiTagView(isWiFiOn: true)
+                .previewLayout(.fixed(width: 200, height: 40))
+            ScanWiFiTagView(isWiFiOn: false)
+                .previewLayout(.fixed(width: 200, height: 40))
+        }
     }
-}
 #endif

@@ -1,15 +1,11 @@
-//
-//  ResultView.swift
-//  Lag
-//
-//  Created by Joe Blau on 9/13/20.
-//
+// SearchResultView.swift
+// Copyright (c) 2020 Submap
 
 import SwiftUI
 
 struct SearchResultView: View {
     let result: SearchResult
-    
+
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
@@ -43,33 +39,31 @@ struct SearchResultView: View {
 }
 
 struct SearchResultView_Previews: PreviewProvider {
-    
     static var previews: some View {
         SearchResultView(result: SearchResult(pointOfInterest: "Mc Donalds",
-                   address: Constants.placeholderAddress,
-                   download: "10 Mbps",
-                   upload: "20 Mbps"))
+                                              address: Constants.placeholderAddress,
+                                              download: "10 Mbps",
+                                              upload: "20 Mbps"))
             .previewLayout(.fixed(width: 350, height: 120))
-        
+
         SearchResultView(result: SearchResult(pointOfInterest: nil,
-                   address: Constants.placeholderAddress,
-                   download: "10 Mbps",
-                   upload: "20 Mbps"))
+                                              address: Constants.placeholderAddress,
+                                              download: "10 Mbps",
+                                              upload: "20 Mbps"))
             .previewLayout(.fixed(width: 350, height: 120))
-        
+
         SearchResultView(result: SearchResult(pointOfInterest: "Mc Donalds",
-                   address: Constants.placeholderAddress,
-                   download: "10 Mbps",
-                   upload: "20 Mbps"))
-            .previewLayout(.fixed(width: 350, height: 120))
-            .preferredColorScheme(.dark)
-        
-        SearchResultView(result: SearchResult(pointOfInterest: nil,
-                   address: Constants.placeholderAddress,
-                   download: "10 Mbps",
-                   upload: "20 Mbps"))
+                                              address: Constants.placeholderAddress,
+                                              download: "10 Mbps",
+                                              upload: "20 Mbps"))
             .previewLayout(.fixed(width: 350, height: 120))
             .preferredColorScheme(.dark)
 
+        SearchResultView(result: SearchResult(pointOfInterest: nil,
+                                              address: Constants.placeholderAddress,
+                                              download: "10 Mbps",
+                                              upload: "20 Mbps"))
+            .previewLayout(.fixed(width: 350, height: 120))
+            .preferredColorScheme(.dark)
     }
 }

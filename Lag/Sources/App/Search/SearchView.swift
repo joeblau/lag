@@ -1,12 +1,8 @@
-//
-//  ContentView.swift
-//  Latency
-//
-//  Created by Joe Blau on 9/11/20.
-//
+// SearchView.swift
+// Copyright (c) 2020 Submap
 
-import SwiftUI
 import ComposableArchitecture
+import SwiftUI
 
 struct SearchView: View {
     let store: Store<SearchState, SearchAction>
@@ -16,7 +12,7 @@ struct SearchView: View {
             NavigationView {
                 VStack {
                     HStack {
-                        TextField("Search...", text: viewStore.binding(get: { $0.queryString }, send: { .updateQuery($0) } ))
+                        TextField("Search...", text: viewStore.binding(get: { $0.queryString }, send: { .updateQuery($0) }))
                             .padding(7)
                             .padding(.horizontal, 25)
                             .background(Color(.systemGroupedBackground))
@@ -61,14 +57,14 @@ struct SearchView: View {
                 }
                 .navigationBarTitle("Search")
                 .navigationBarItems(trailing:
-                                        Button(action: {
-                                            viewStore.send(.presentScanner)
-                                        }, label: {
-                                            Text("Scan")
-                                                .padding()
-                                        })
+                    Button(action: {
+                        viewStore.send(.presentScanner)
+                    }, label: {
+                        Text("Scan")
+                            .padding()
+                    })
                 )
-                .sheet(isPresented: viewStore.binding(get: { $0.showScanner }, send: .dismissScanner ), content: {
+                .sheet(isPresented: viewStore.binding(get: { $0.showScanner }, send: .dismissScanner), content: {
                     ScanView(store: store.scope(state: { $0.scanState },
                                                 action: { SearchAction.scanManager($0) }))
                 })
@@ -79,9 +75,9 @@ struct SearchView: View {
 }
 
 #if DEBUG
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        SearchView(store: sampleSearchStore)
+    struct ContentView_Previews: PreviewProvider {
+        static var previews: some View {
+            SearchView(store: sampleSearchStore)
+        }
     }
-}
 #endif
