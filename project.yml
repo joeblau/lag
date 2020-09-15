@@ -18,6 +18,9 @@ packages:
   algolia-search-client:
     url: https://github.com/joeblau/algoliasearch-client-swift
     branch: master
+  composable-fast:
+    url: https://github.com/joeblau/composable-fast
+    from: 0.1.0
 targets:
   Lag:
     type: application
@@ -39,3 +42,5 @@ targets:
         product: ComposableCoreLocation
       - package: algolia-search-client
         product: AlgoliaSearchClient
+      - package: composable-fast
+        product: ComposableFast

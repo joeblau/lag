@@ -16,6 +16,7 @@ import SystemConfiguration.CaptiveNetwork
 import Network
 import UIKit
 import MapKit
+import ComposableFast
 
 struct GeoLoc: Codable, Equatable {
     var lat: Double
@@ -47,22 +48,6 @@ struct SearchResult: Equatable, Hashable {
     var address: String = "-"
     var download: String = "-"
     var upload: String = "-"
-}
-
-extension CLLocationCoordinate2D: Equatable {
-    public static func == (lhs: CLLocationCoordinate2D, rhs: CLLocationCoordinate2D) -> Bool {
-        fabs(lhs.latitude - rhs.latitude) < Double.ulpOfOne &&
-            fabs(lhs.longitude - lhs.longitude) < Double.ulpOfOne
-    }
-}
-
-extension Digest {
-    var bytes: [UInt8] { Array(makeIterator()) }
-    var data: Data { Data(bytes) }
-    
-    var hexStr: String {
-        bytes.map { String(format: "%02X", $0) }.joined()
-    }
 }
 
 enum ScanningState: Equatable {
@@ -120,9 +105,6 @@ struct AppEnvironment {
     let geocoder = CLGeocoder()
     let nwPathMonitor = NWPathMonitor()
 }
-
-struct LocationManagerId: Hashable {}
-struct FastManagerId: Hashable {}
 
 let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environment in
     switch action {
@@ -200,6 +182,9 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
         state.scanResult.objectID = ObjectID(stringLiteral: digest.hexStr)
         let scanResults = [state.scanResult]
         
+        #if targetEnvironment(simulator)
+        return Effect(value: .saveCompleted)
+        #else
         return .future { completion in
             environment.latencyIndex.saveObjects(scanResults, autoGeneratingObjectID: true) { result in
                 switch result {
@@ -210,6 +195,7 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
                 }
             }
         }
+        #endif
         
     case .saveCompleted:
         state.scanning = .saved
@@ -410,14 +396,7 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
     }
 })
 
-extension CLPlacemark {
-    var address: String? {
-        guard let postalAddress = self.postalAddress else { return nil }
-        let postalAddressFormatter = CNPostalAddressFormatter()
-        postalAddressFormatter.style = .mailingAddress
-        return postalAddressFormatter.string(from: postalAddress)
-    }
-}
+
 
 enum Units: String {
     case Kbps

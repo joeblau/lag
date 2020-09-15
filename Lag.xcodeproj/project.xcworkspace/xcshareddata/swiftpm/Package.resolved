@@ -20,6 +20,15 @@
         }
       },
       {
+        "package": "composable-fast",
+        "repositoryURL": "https://github.com/joeblau/composable-fast",
+        "state": {
+          "branch": null,
+          "revision": "4c74d967144a49810ba0919efab8fe5d6c07e27a",
+          "version": "0.1.0"
+        }
+      },
+      {
         "package": "swift-case-paths",
         "repositoryURL": "https://github.com/pointfreeco/swift-case-paths",
         "state": {

@@ -3,44 +3,49 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		04C4C3B970A202AE924593CE /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 4B6417C2DE3DDEA5D97810BC /* ComposableArchitecture */; };
 		083B5163B7C879C52E8D6AEA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E96B4830666B05B70C83B3B /* Preview Assets.xcassets */; };
-		0ADA24607EC6F596C63489CE /* ScanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF6BB1F63CB8815ED1D9EC8 /* ScanView.swift */; };
-		16209FBC33D61A360D5D4DF1 /* LagApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3720F575BA0464463C88BBC5 /* LagApp.swift */; };
+		0C8802F573ABA8994018702A /* CLPlacemark+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93317CC55A288B610FB1197A /* CLPlacemark+Extensions.swift */; };
 		26D9446AD5B208470D619C44 /* ComposableCoreLocation in Frameworks */ = {isa = PBXBuildFile; productRef = 57F13C01630BBA728A5D561F /* ComposableCoreLocation */; };
-		30808C77561AD8A0AAC562DD /* WiFiTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F14F34AD6DF96BC548A51F /* WiFiTagView.swift */; };
+		2B4F9CA9FC9B2B39D518295D /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7647B9BA0560E936DEEE4360 /* SearchView.swift */; };
+		2BCD1F4B88C8992867731832 /* WiFiTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006D9052B3CA51A25A638CCA /* WiFiTagView.swift */; };
+		2EEEE16D20B956DBD5BBFB6B /* Digest+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53E1A9638027320A5371B75 /* Digest+Extensions.swift */; };
 		4C065A00A9490F8BABB6B6BC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E683792C747AE3E06940FDB3 /* Constants.swift */; };
 		4E8A12C8F399DB3124C03233 /* SampleAppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3000A18CA3CAAF5CC46BD75A /* SampleAppReducer.swift */; };
-		4FEC44B101818E352E2AF918 /* ScanDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7A15CFE926DB4D74B3A914 /* ScanDataView.swift */; };
-		539C5CFC47829A60C1BFA0DD /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64042924D9A83F669A285747 /* SearchView.swift */; };
-		96C24B99673E46589492AEF7 /* FastManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD702568A5FABEDC7E4C251 /* FastManager.swift */; };
-		A21D38B1DDF9A1FC3DDFC193 /* AppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8F9676BB23465C3E2ADDA0 /* AppReducer.swift */; };
+		725379FBDBAFD5715F7F1727 /* AppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C365B6EEC76C6C1AB1B0AFF /* AppReducer.swift */; };
+		7E213C0E30FB13DB3CB5DBD5 /* ScanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0939A45111909239EE8B6B /* ScanView.swift */; };
+		AD618552F7E033A3D777B8C1 /* ComposableFast in Frameworks */ = {isa = PBXBuildFile; productRef = F5AACA82CABE81E36D3891CC /* ComposableFast */; };
+		B405BDE431BAD76BC5F506D2 /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2BBF841C17710163D9D0B5 /* ResultView.swift */; };
+		B480A94D8655968B1F107168 /* EstablishmentPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0737A99136B15BCA5CE91F9B /* EstablishmentPickerView.swift */; };
+		B8EA29987126E645B98718E2 /* CLLocationCoordinate2D+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC750CDFEAB39CA9DACBE82F /* CLLocationCoordinate2D+Extensions.swift */; };
+		D295C0FAEF0694AE680071E4 /* LagApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B6F4A989BEBF02FF264BBB /* LagApp.swift */; };
+		D61CC4E0C5846A6146FD3463 /* ScanDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CDF0538CCA9460EDE92550 /* ScanDataView.swift */; };
 		DAD4FECADBAF017143EEA023 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6126502A6F7E387AAC93FD03 /* Assets.xcassets */; };
-		E03E4767025C96722B4D8CCC /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C643F93967FE145A628DB63 /* ResultView.swift */; };
-		EDF3330BBCE0B9C31391C8BA /* EstablishmentPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5811168963301379F498881 /* EstablishmentPickerView.swift */; };
 		F7E9E4BB2EFAF20D903F602C /* AlgoliaSearchClient in Frameworks */ = {isa = PBXBuildFile; productRef = A29A3DFA9CB77B34EC91F6D6 /* AlgoliaSearchClient */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1C7A15CFE926DB4D74B3A914 /* ScanDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanDataView.swift; sourceTree = "<group>"; };
+		006D9052B3CA51A25A638CCA /* WiFiTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiFiTagView.swift; sourceTree = "<group>"; };
+		0737A99136B15BCA5CE91F9B /* EstablishmentPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstablishmentPickerView.swift; sourceTree = "<group>"; };
 		3000A18CA3CAAF5CC46BD75A /* SampleAppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleAppReducer.swift; sourceTree = "<group>"; };
-		3720F575BA0464463C88BBC5 /* LagApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LagApp.swift; sourceTree = "<group>"; };
 		3E96B4830666B05B70C83B3B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		4C643F93967FE145A628DB63 /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
-		5A8F9676BB23465C3E2ADDA0 /* AppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
+		4C365B6EEC76C6C1AB1B0AFF /* AppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
+		52B6F4A989BEBF02FF264BBB /* LagApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LagApp.swift; sourceTree = "<group>"; };
 		6126502A6F7E387AAC93FD03 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		64042924D9A83F669A285747 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		6E0939A45111909239EE8B6B /* ScanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanView.swift; sourceTree = "<group>"; };
 		733E9EB7979025080441D8AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		7DD702568A5FABEDC7E4C251 /* FastManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastManager.swift; sourceTree = "<group>"; };
+		7647B9BA0560E936DEEE4360 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		93317CC55A288B610FB1197A /* CLPlacemark+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLPlacemark+Extensions.swift"; sourceTree = "<group>"; };
 		98964698473A9F5C6A30D453 /* Lag.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Lag.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		B7F14F34AD6DF96BC548A51F /* WiFiTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiFiTagView.swift; sourceTree = "<group>"; };
-		E5811168963301379F498881 /* EstablishmentPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstablishmentPickerView.swift; sourceTree = "<group>"; };
+		B5CDF0538CCA9460EDE92550 /* ScanDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanDataView.swift; sourceTree = "<group>"; };
+		CC2BBF841C17710163D9D0B5 /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
+		CC750CDFEAB39CA9DACBE82F /* CLLocationCoordinate2D+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+Extensions.swift"; sourceTree = "<group>"; };
+		D53E1A9638027320A5371B75 /* Digest+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Digest+Extensions.swift"; sourceTree = "<group>"; };
 		E683792C747AE3E06940FDB3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		EEF6BB1F63CB8815ED1D9EC8 /* ScanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +56,7 @@
 				04C4C3B970A202AE924593CE /* ComposableArchitecture in Frameworks */,
 				26D9446AD5B208470D619C44 /* ComposableCoreLocation in Frameworks */,
 				F7E9E4BB2EFAF20D903F602C /* AlgoliaSearchClient in Frameworks */,
+				AD618552F7E033A3D777B8C1 /* ComposableFast in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,20 +79,33 @@
 			);
 			sourceTree = "<group>";
 		};
-		74ED85C222481AB1E9101C05 /* Manager */ = {
-			isa = PBXGroup;
-			children = (
-				7DD702568A5FABEDC7E4C251 /* FastManager.swift */,
-			);
-			path = Manager;
-			sourceTree = "<group>";
-		};
 		77548685DDD75E3F9F7C73D5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
 				6126502A6F7E387AAC93FD03 /* Assets.xcassets */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		785180120704948FC2C3C125 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				CC2BBF841C17710163D9D0B5 /* ResultView.swift */,
+				7647B9BA0560E936DEEE4360 /* SearchView.swift */,
+				9E1A6CF6CE29F5C13A1CDF2D /* Scan */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		9E1A6CF6CE29F5C13A1CDF2D /* Scan */ = {
+			isa = PBXGroup;
+			children = (
+				0737A99136B15BCA5CE91F9B /* EstablishmentPickerView.swift */,
+				B5CDF0538CCA9460EDE92550 /* ScanDataView.swift */,
+				6E0939A45111909239EE8B6B /* ScanView.swift */,
+				006D9052B3CA51A25A638CCA /* WiFiTagView.swift */,
+			);
+			path = Scan;
 			sourceTree = "<group>";
 		};
 		AE264CFCFD9F2F0F2BCDD78F /* PreviewContent */ = {
@@ -112,16 +131,9 @@
 		D464324034E4A4853F002D6A /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				5A8F9676BB23465C3E2ADDA0 /* AppReducer.swift */,
 				E683792C747AE3E06940FDB3 /* Constants.swift */,
-				E5811168963301379F498881 /* EstablishmentPickerView.swift */,
-				3720F575BA0464463C88BBC5 /* LagApp.swift */,
-				4C643F93967FE145A628DB63 /* ResultView.swift */,
-				1C7A15CFE926DB4D74B3A914 /* ScanDataView.swift */,
-				EEF6BB1F63CB8815ED1D9EC8 /* ScanView.swift */,
-				64042924D9A83F669A285747 /* SearchView.swift */,
-				B7F14F34AD6DF96BC548A51F /* WiFiTagView.swift */,
-				74ED85C222481AB1E9101C05 /* Manager */,
+				F409DE5695E2640B27E6513F /* App */,
+				E828EDBF8A086D23E16B4B93 /* Extensions */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -134,12 +146,24 @@
 			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
-		"TEMP_78F52FBE-1569-4C99-A724-A368439D500D" /* Resources */ = {
+		E828EDBF8A086D23E16B4B93 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				6126502A6F7E387AAC93FD03 /* Assets.xcassets */,
+				CC750CDFEAB39CA9DACBE82F /* CLLocationCoordinate2D+Extensions.swift */,
+				93317CC55A288B610FB1197A /* CLPlacemark+Extensions.swift */,
+				D53E1A9638027320A5371B75 /* Digest+Extensions.swift */,
 			);
-			path = Resources;
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		F409DE5695E2640B27E6513F /* App */ = {
+			isa = PBXGroup;
+			children = (
+				4C365B6EEC76C6C1AB1B0AFF /* AppReducer.swift */,
+				52B6F4A989BEBF02FF264BBB /* LagApp.swift */,
+				785180120704948FC2C3C125 /* Search */,
+			);
+			path = App;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -162,6 +186,7 @@
 				4B6417C2DE3DDEA5D97810BC /* ComposableArchitecture */,
 				57F13C01630BBA728A5D561F /* ComposableCoreLocation */,
 				A29A3DFA9CB77B34EC91F6D6 /* AlgoliaSearchClient */,
+				F5AACA82CABE81E36D3891CC /* ComposableFast */,
 			);
 			productName = Lag;
 			productReference = 98964698473A9F5C6A30D453 /* Lag.app */;
@@ -190,6 +215,7 @@
 			mainGroup = 5C13F48C539B9F2816BFC49D;
 			packageReferences = (
 				86FEB583792A94773E2677D3 /* XCRemoteSwiftPackageReference "algoliasearch-client-swift" */,
+				F7DE5156F30981F941F395C1 /* XCRemoteSwiftPackageReference "composable-fast" */,
 				F112B35C87288122D1D050CC /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 			);
 			projectDirPath = "";
@@ -217,17 +243,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A21D38B1DDF9A1FC3DDFC193 /* AppReducer.swift in Sources */,
+				725379FBDBAFD5715F7F1727 /* AppReducer.swift in Sources */,
+				B8EA29987126E645B98718E2 /* CLLocationCoordinate2D+Extensions.swift in Sources */,
+				0C8802F573ABA8994018702A /* CLPlacemark+Extensions.swift in Sources */,
 				4C065A00A9490F8BABB6B6BC /* Constants.swift in Sources */,
-				EDF3330BBCE0B9C31391C8BA /* EstablishmentPickerView.swift in Sources */,
-				96C24B99673E46589492AEF7 /* FastManager.swift in Sources */,
-				16209FBC33D61A360D5D4DF1 /* LagApp.swift in Sources */,
-				E03E4767025C96722B4D8CCC /* ResultView.swift in Sources */,
+				2EEEE16D20B956DBD5BBFB6B /* Digest+Extensions.swift in Sources */,
+				B480A94D8655968B1F107168 /* EstablishmentPickerView.swift in Sources */,
+				D295C0FAEF0694AE680071E4 /* LagApp.swift in Sources */,
+				B405BDE431BAD76BC5F506D2 /* ResultView.swift in Sources */,
 				4E8A12C8F399DB3124C03233 /* SampleAppReducer.swift in Sources */,
-				4FEC44B101818E352E2AF918 /* ScanDataView.swift in Sources */,
-				0ADA24607EC6F596C63489CE /* ScanView.swift in Sources */,
-				539C5CFC47829A60C1BFA0DD /* SearchView.swift in Sources */,
-				30808C77561AD8A0AAC562DD /* WiFiTagView.swift in Sources */,
+				D61CC4E0C5846A6146FD3463 /* ScanDataView.swift in Sources */,
+				7E213C0E30FB13DB3CB5DBD5 /* ScanView.swift in Sources */,
+				2B4F9CA9FC9B2B39D518295D /* SearchView.swift in Sources */,
+				2BCD1F4B88C8992867731832 /* WiFiTagView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -428,6 +456,14 @@
 				minimumVersion = 0.8.0;
 			};
 		};
+		F7DE5156F30981F941F395C1 /* XCRemoteSwiftPackageReference "composable-fast" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/joeblau/composable-fast";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -445,6 +481,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 86FEB583792A94773E2677D3 /* XCRemoteSwiftPackageReference "algoliasearch-client-swift" */;
 			productName = AlgoliaSearchClient;
+		};
+		F5AACA82CABE81E36D3891CC /* ComposableFast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F7DE5156F30981F941F395C1 /* XCRemoteSwiftPackageReference "composable-fast" */;
+			productName = ComposableFast;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

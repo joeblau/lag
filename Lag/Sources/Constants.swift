@@ -14,6 +14,9 @@ struct PointOfInterest {
     let category: MKPointOfInterestCategory?
 }
 
+struct LocationManagerId: Hashable {}
+struct FastManagerId: Hashable {}
+
 struct Constants {
     static var scannedLocationsKey = "user_scanned_locations_key"
     static var placeholderAddress = """
