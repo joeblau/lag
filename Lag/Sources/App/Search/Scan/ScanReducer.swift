@@ -11,6 +11,7 @@ enum ScanningState: Equatable {
     case started
     case completed
     case saved
+    case error
 }
 
 struct ScanResult: Codable, Equatable {
@@ -40,6 +41,7 @@ enum ScanAction: Equatable {
     case dismissScanner
 
     case startSaveResults
+    case saveError
     case saveCompleted
     case startTest
     case setEstablishment(Int)
@@ -49,10 +51,19 @@ let scanReducer = Reducer<ScanState, ScanAction, AppEnvironment> { state, action
 
     switch action {
     case .startTest:
+        struct ScanningTimeoutDeboundeId: Hashable {}
+
         state.scanning = .started
         return environment.fastManager.startTest(id: FastManagerId()).fireAndForget()
 
     case .startSaveResults:
+        guard state.scanResult.download != nil, state.scanResult.upload != nil else {
+            return .merge(
+                environment.fastManager.stopTest(id: FastManagerId()).fireAndForget(),
+                Effect(value: .saveError)
+            )
+        }
+
         guard let data = state.scanResult.address?.data(using: .utf8) else { return .none }
         let digest = Insecure.SHA1.hash(data: data)
 
@@ -82,6 +93,10 @@ let scanReducer = Reducer<ScanState, ScanAction, AppEnvironment> { state, action
                 }
             }
         #endif
+
+    case .saveError:
+        state.scanning = .error
+        return .none
 
     case .saveCompleted:
         state.scanning = .saved

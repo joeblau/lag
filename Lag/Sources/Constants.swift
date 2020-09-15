@@ -14,6 +14,7 @@ struct LocationManagerId: Hashable {}
 struct FastManagerId: Hashable {}
 
 struct Constants {
+    static var scanTimeout: DispatchQueue.SchedulerTimeType.Stride = .seconds(15)
     static var scannedLocationsKey = "user_scanned_locations_key"
     static var placeholderAddress = """
     1600 Pennsylvania Avenue NW

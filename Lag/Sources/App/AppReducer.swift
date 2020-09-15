@@ -170,6 +170,8 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
         }
 
     case let .fastManager(action):
+        struct CancelDeboundeId: Hashable {}
+
         switch action {
         case let .didReceive(message: message):
             guard let body = message.body as? NSDictionary,
@@ -182,7 +184,8 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
                 state.searchState.scanState.scanResult.download = "\(value) \(units)"
                 state.searchState.scanState.scanResult.downloadRaw = Double(value) ?? 0.0
                 state.searchState.scanState.scanResult.downloadUnits = Units(rawValue: units)?.integer ?? -1
-                return .none
+                return Effect(value: .searchManager(.scanManager(.startSaveResults)))
+                    .debounce(id: CancelDeboundeId(), for: Constants.scanTimeout, scheduler: DispatchQueue.main)
 
             case "down-done":
                 return .none
@@ -191,10 +194,14 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
                 state.searchState.scanState.scanResult.upload = "\(value) \(units)"
                 state.searchState.scanState.scanResult.uploadRaw = Double(value) ?? 0.0
                 state.searchState.scanState.scanResult.uploadUnits = Units(rawValue: units)?.integer ?? -1
-                return .none
+                return Effect(value: .searchManager(.scanManager(.startSaveResults)))
+                    .debounce(id: CancelDeboundeId(), for: Constants.scanTimeout, scheduler: DispatchQueue.main)
 
             case "up-done":
-                return Effect(value: .searchManager(.scanManager(.startSaveResults)))
+                return .concatenate(
+                    .cancel(id: CancelDeboundeId()),
+                    Effect(value: .searchManager(.scanManager(.startSaveResults)))
+                )
 
             default:
                 return .none

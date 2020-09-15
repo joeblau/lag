@@ -64,7 +64,6 @@ struct SearchView: View {
                         }
                         .listStyle(PlainListStyle())
                     }
-
                 }
                 .navigationBarTitle("Search")
                 .navigationBarItems(trailing:

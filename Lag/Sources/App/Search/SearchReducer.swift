@@ -57,10 +57,10 @@ let searchReducer = Reducer<SearchState, SearchAction, AppEnvironment> { state, 
     case let .updateQuery(query):
         state.queryString = query
         state.isSearching = true
-        struct CancelDelayId: Hashable {}
+        struct CancelDeboundeId: Hashable {}
 
         return Effect(value: .perfomSeach(query))
-            .debounce(id: CancelDelayId(),
+            .debounce(id: CancelDeboundeId(),
                       for: .seconds(1),
                       scheduler: DispatchQueue.main)
 
@@ -74,8 +74,8 @@ let searchReducer = Reducer<SearchState, SearchAction, AppEnvironment> { state, 
                 case let .success(response):
                     let results = response.hits.compactMap { hit -> SearchResult? in
                         guard let address = hit.object["address"]?.object() as? String,
-                              let download = hit.object["download"]?.object() as? String,
-                              let upload = hit.object["upload"]?.object() as? String else { return nil }
+                            let download = hit.object["download"]?.object() as? String,
+                            let upload = hit.object["upload"]?.object() as? String else { return nil }
 
                         return SearchResult(pointOfInterest: hit.object["pointOfInterest"]?.object() as? String,
                                             address: address,

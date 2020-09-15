@@ -99,6 +99,19 @@ struct ScanView: View {
                                     .clipShape(Capsule())
                             })
                                 .padding()
+                        case .error:
+                            Button(action: {
+                                viewStore.send(.startTest)
+                            }, label: {
+                                Text("Error – Rescan")
+                                    .font(.headline)
+                                    .frame(maxWidth: .infinity)
+                                    .foregroundColor(.white)
+                                    .padding()
+                                    .background(Color.red)
+                                    .clipShape(Capsule())
+                            })
+                                .padding()
                         }
                     }
                 }
