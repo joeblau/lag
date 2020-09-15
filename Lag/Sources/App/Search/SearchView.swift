@@ -9,14 +9,14 @@ import SwiftUI
 import ComposableArchitecture
 
 struct SearchView: View {
-    let store: Store<AppState, AppAction>
+    let store: Store<SearchState, SearchAction>
 
     var body: some View {
         WithViewStore(store) { viewStore in
             NavigationView {
                 VStack {
                     HStack {
-                        TextField("Search ...", text: viewStore.binding(get: { $0.queryString }, send: { .updateQuery($0) } ))
+                        TextField("Search...", text: viewStore.binding(get: { $0.queryString }, send: { .updateQuery($0) } ))
                             .padding(7)
                             .padding(.horizontal, 25)
                             .background(Color(.systemGroupedBackground))
@@ -55,7 +55,7 @@ struct SearchView: View {
                         }
                     }
                     List(viewStore.queryResults, id: \.self) { result in
-                        ResultView(result: result)
+                        SearchResultView(result: result)
                     }
                     .listStyle(PlainListStyle())
                 }
@@ -69,7 +69,8 @@ struct SearchView: View {
                                         })
                 )
                 .sheet(isPresented: viewStore.binding(get: { $0.showScanner }, send: .dismissScanner ), content: {
-                    ScanView(store: store)
+                    ScanView(store: store.scope(state: { $0.scanState },
+                                                action: { SearchAction.scanManager($0) }))
                 })
             }
             .navigationViewStyle(StackNavigationViewStyle())
@@ -80,7 +81,7 @@ struct SearchView: View {
 #if DEBUG
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchView(store: sampleAppStore)
+        SearchView(store: sampleSearchStore)
     }
 }
 #endif

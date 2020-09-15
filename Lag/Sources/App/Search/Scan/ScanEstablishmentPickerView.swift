@@ -8,8 +8,9 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct EstablishmentPickerView: View {
-    let store: Store<AppState, AppAction>
+struct ScanEstablishmentPickerView: View {
+    let store: Store<ScanState, ScanAction>
+
     @State private var pickerSetting = 0
     var types = Constants.pointsOfInterest
 
@@ -26,9 +27,9 @@ struct EstablishmentPickerView: View {
 }
 
 #if DEBUG
-struct EstablishmentPickerView_Previews: PreviewProvider {
+struct ScanEstablishmentPickerView_Previews: PreviewProvider {
     static var previews: some View {
-        EstablishmentPickerView(store: sampleAppStore)
+        ScanEstablishmentPickerView(store: sampleScanStore)
     }
 }
 #endif

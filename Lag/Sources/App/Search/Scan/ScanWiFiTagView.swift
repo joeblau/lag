@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct WiFiTagView: View {
+struct ScanWiFiTagView: View {
     let isWiFiOn: Bool
     
     var body: some View {
@@ -31,11 +31,11 @@ struct WiFiTagView: View {
 }
 
 #if DEBUG
-struct WiFiTagView_Previews: PreviewProvider {
+struct ScanWiFiTagView_Previews: PreviewProvider {
     static var previews: some View {
-        WiFiTagView(isWiFiOn: true)
+        ScanWiFiTagView(isWiFiOn: true)
             .previewLayout(.fixed(width: 200, height: 40))
-        WiFiTagView(isWiFiOn: false)
+        ScanWiFiTagView(isWiFiOn: false)
             .previewLayout(.fixed(width: 200, height: 40))
     }
 }

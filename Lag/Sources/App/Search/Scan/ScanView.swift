@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct ScanView: View {
-    let store: Store<AppState, AppAction>
+    let store: Store<ScanState, ScanAction>
     
     var body: some View {
         WithViewStore(store) { viewStore in
@@ -39,7 +39,7 @@ struct ScanView: View {
                             
                             Section(header: Text(viewStore.scanResult.pointOfInterest ?? Constants.placeholderPointOfInterest),
                                     footer: Text(Constants.pointsOfInterest[viewStore.establishmentPickerIndex].name)) {
-                                EstablishmentPickerView(store: store)
+                                ScanEstablishmentPickerView(store: store)
                                     .padding(EdgeInsets(top: 0, leading: -10, bottom: 0, trailing: -10))
                             }
                             
@@ -70,7 +70,7 @@ struct ScanView: View {
                             .disabled(!viewStore.scanResult.onWiFi)
                             .opacity(viewStore.scanResult.onWiFi ? 1.0 : 0.7)
                             .padding()
-                            
+
                         case .started:
                             ProgressView()
                                 .colorScheme(.dark)
@@ -80,7 +80,7 @@ struct ScanView: View {
                                 .background(Color.blue.opacity(0.7))
                                 .clipShape(Capsule())
                                 .padding()
-                            
+
                         case .completed:
                             Text("Uploading...")
                                 .colorScheme(.dark)
@@ -90,7 +90,7 @@ struct ScanView: View {
                                 .background(Color.blue.opacity(0.7))
                                 .clipShape(Capsule())
                                 .padding()
-                                
+
                         case .saved:
                             Button(action: {
                                 viewStore.send(.dismissScanner)
@@ -116,7 +116,7 @@ struct ScanView: View {
                                                 .padding()
                                         })
                                     , trailing:
-                                        WiFiTagView(isWiFiOn: viewStore.scanResult.onWiFi)
+                                        ScanWiFiTagView(isWiFiOn: viewStore.scanResult.onWiFi)
                 )
             })
         }
@@ -126,8 +126,8 @@ struct ScanView: View {
 #if DEBUG
 struct ScanView_Previews: PreviewProvider {
     static var previews: some View {
-        ScanView(store: sampleAppStore)
-        ScanView(store: sampleAppStore)
+        ScanView(store: sampleScanStore)
+        ScanView(store: sampleScanStore)
             .preferredColorScheme(.dark)
     }
 }

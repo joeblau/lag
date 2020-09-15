@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ResultView: View {
+struct SearchResultView: View {
     let result: SearchResult
     
     var body: some View {
@@ -42,29 +42,29 @@ struct ResultView: View {
     }
 }
 
-struct ResultView_Previews: PreviewProvider {
+struct SearchResultView_Previews: PreviewProvider {
     
     static var previews: some View {
-        ResultView(result: SearchResult(pointOfInterest: "Mc Donalds",
+        SearchResultView(result: SearchResult(pointOfInterest: "Mc Donalds",
                    address: Constants.placeholderAddress,
                    download: "10 Mbps",
                    upload: "20 Mbps"))
             .previewLayout(.fixed(width: 350, height: 120))
         
-        ResultView(result: SearchResult(pointOfInterest: nil,
+        SearchResultView(result: SearchResult(pointOfInterest: nil,
                    address: Constants.placeholderAddress,
                    download: "10 Mbps",
                    upload: "20 Mbps"))
             .previewLayout(.fixed(width: 350, height: 120))
         
-        ResultView(result: SearchResult(pointOfInterest: "Mc Donalds",
+        SearchResultView(result: SearchResult(pointOfInterest: "Mc Donalds",
                    address: Constants.placeholderAddress,
                    download: "10 Mbps",
                    upload: "20 Mbps"))
             .previewLayout(.fixed(width: 350, height: 120))
             .preferredColorScheme(.dark)
         
-        ResultView(result: SearchResult(pointOfInterest: nil,
+        SearchResultView(result: SearchResult(pointOfInterest: nil,
                    address: Constants.placeholderAddress,
                    download: "10 Mbps",
                    upload: "20 Mbps"))

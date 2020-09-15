@@ -25,7 +25,8 @@ struct LagApp: App {
     
     var body: some Scene {
         WindowGroup {
-            SearchView(store: store)
+            SearchView(store: store.scope(state: { $0.searchState },
+                                          action: { AppAction.searchManager($0) }))
         }
         .onChange(of: scenePhase) { phase in
             switch phase {
