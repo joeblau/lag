@@ -50,10 +50,21 @@ struct SearchView: View {
                             .animation(.default)
                         }
                     }
-                    List(viewStore.queryResults, id: \.self) { result in
-                        SearchResultView(result: result)
+                    switch viewStore.isSearching {
+                    case true:
+                        Spacer()
+                        VStack(spacing: 20) {
+                            Image("Algolia")
+                            ProgressView()
+                        }
+                        Spacer()
+                    case false:
+                        List(viewStore.queryResults, id: \.self) { result in
+                            SearchResultView(result: result)
+                        }
+                        .listStyle(PlainListStyle())
                     }
-                    .listStyle(PlainListStyle())
+
                 }
                 .navigationBarTitle("Search")
                 .navigationBarItems(trailing:

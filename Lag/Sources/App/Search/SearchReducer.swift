@@ -16,11 +16,12 @@ struct SearchResult: Equatable, Hashable {
 
 struct SearchState: Equatable {
     var scanState = ScanState()
-
+    var isSearching: Bool = false
     var showScanner: Bool = false
     var queryResults = [SearchResult]()
     var isEditing: Bool = false
     var queryString: String = ""
+    var previousQuery: String = ""
 }
 
 enum SearchAction: Equatable {
@@ -28,6 +29,7 @@ enum SearchAction: Equatable {
     case dismissScanner
     case setIsEditing(Bool)
     case updateQuery(String)
+    case perfomSeach(String)
     case clearQuery
     case updateResults([SearchResult])
 
@@ -54,15 +56,26 @@ let searchReducer = Reducer<SearchState, SearchAction, AppEnvironment> { state, 
 
     case let .updateQuery(query):
         state.queryString = query
+        state.isSearching = true
+        struct CancelDelayId: Hashable {}
 
+        return Effect(value: .perfomSeach(query))
+            .debounce(id: CancelDelayId(),
+                      for: .seconds(1),
+                      scheduler: DispatchQueue.main)
+
+    case let .perfomSeach(query):
+        state.isSearching = false
+        guard state.previousQuery != query else { return .none }
+        state.previousQuery = query
         return .future { completion in
             environment.latencyIndex.search(query: Query(query)) { result in
                 switch result {
                 case let .success(response):
                     let results = response.hits.compactMap { hit -> SearchResult? in
                         guard let address = hit.object["address"]?.object() as? String,
-                            let download = hit.object["download"]?.object() as? String,
-                            let upload = hit.object["upload"]?.object() as? String else { return nil }
+                              let download = hit.object["download"]?.object() as? String,
+                              let upload = hit.object["upload"]?.object() as? String else { return nil }
 
                         return SearchResult(pointOfInterest: hit.object["pointOfInterest"]?.object() as? String,
                                             address: address,
@@ -84,6 +97,7 @@ let searchReducer = Reducer<SearchState, SearchAction, AppEnvironment> { state, 
     case .clearQuery:
         state.isEditing = false
         state.queryString = ""
+        state.previousQuery = ""
         state.queryResults = [SearchResult]()
         return .none
 
