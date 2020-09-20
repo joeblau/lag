@@ -49,7 +49,6 @@ enum AppAction: Equatable {
     // Delegates
     case searchManager(SearchAction)
     case locationManager(LocationManager.Action)
-    case fastManager(FastManager.Action)
 
     // Lifecycle
     case onActive
@@ -170,52 +169,12 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
             return .none
         }
 
-    case let .fastManager(action):
-        struct CancelDeboundeId: Hashable {}
-
-        switch action {
-        case let .didReceive(message: message):
-            guard let body = message.body as? NSDictionary,
-                let type = body["type"] as? String,
-                let units = body["units"] as? String,
-                let value = body["value"] as? String else { return .none }
-
-            switch type {
-            case "down":
-                state.searchState.scanState.scanResult.download = "\(value) \(units)"
-                state.searchState.scanState.scanResult.downloadRaw = Double(value) ?? 0.0
-                state.searchState.scanState.scanResult.downloadUnits = Units(rawValue: units)?.integer ?? -1
-                return Effect(value: .searchManager(.scanManager(.startSaveResults)))
-                    .debounce(id: CancelDeboundeId(), for: Constants.scanTimeout, scheduler: DispatchQueue.main)
-
-            case "down-done":
-                return .none
-
-            case "up":
-                state.searchState.scanState.scanResult.upload = "\(value) \(units)"
-                state.searchState.scanState.scanResult.uploadRaw = Double(value) ?? 0.0
-                state.searchState.scanState.scanResult.uploadUnits = Units(rawValue: units)?.integer ?? -1
-                return Effect(value: .searchManager(.scanManager(.startSaveResults)))
-                    .debounce(id: CancelDeboundeId(), for: Constants.scanTimeout, scheduler: DispatchQueue.main)
-
-            case "up-done":
-                return .concatenate(
-                    .cancel(id: CancelDeboundeId()),
-                    Effect(value: .searchManager(.scanManager(.startSaveResults)))
-                )
-
-            default:
-                return .none
-            }
-        }
-
     // MARK: - Lifecycle
 
     case .onActive:
         print(CLLocation(latitude: 200.0, longitude: 200.0).coordinate)
         return .merge(
             environment.locationManager.create(id: LocationManagerId()).map(AppAction.locationManager),
-            environment.fastManager.create(id: FastManagerId()).map(AppAction.fastManager),
             Effect(value: AppAction.startLocationManager),
             Effect.run { subscriber in
                 environment.nwPathMonitor.start(queue: .main)
@@ -234,7 +193,6 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
     case .onBackground:
         return .merge(
             Effect(value: AppAction.stopLocationManager),
-            environment.fastManager.destroy(id: FastManagerId()).fireAndForget(),
             environment.locationManager.destroy(id: LocationManagerId()).fireAndForget()
         )
 

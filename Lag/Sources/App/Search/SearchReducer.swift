@@ -4,6 +4,7 @@
 import AlgoliaSearchClient
 import ComposableArchitecture
 import Foundation
+import ComposableFast
 
 struct SearchResult: Equatable, Hashable {
     var pointOfInterest: String?
@@ -25,6 +26,8 @@ struct SearchState: Equatable {
 }
 
 enum SearchAction: Equatable {
+    case fastManager(FastManager.Action)
+    
     case presentScanner
     case dismissScanner
     case setIsEditing(Bool)
@@ -48,7 +51,7 @@ let searchReducer = Reducer<SearchState, SearchAction, AppEnvironment> { state, 
         state.scanState.scanResult.uploadRaw = 0.0
         state.scanState.scanResult.uploadUnits = 0
         state.showScanner = true
-        return .none
+        return environment.fastManager.create(id: FastManagerId()).map(SearchAction.fastManager)
 
     case let .setIsEditing(isEditing):
         state.isEditing = isEditing
@@ -100,13 +103,51 @@ let searchReducer = Reducer<SearchState, SearchAction, AppEnvironment> { state, 
         state.previousQuery = ""
         state.queryResults = [SearchResult]()
         return .none
+        
+    case let .fastManager(action):
+        struct CancelDeboundeId: Hashable {}
+
+        switch action {
+        case let .didReceive(message: message):
+            guard let body = message.body as? NSDictionary,
+                let type = body["type"] as? String,
+                let units = body["units"] as? String,
+                let value = body["value"] as? String else { return .none }
+
+            switch type {
+            case "down":
+                state.scanState.scanResult.download = "\(value) \(units)"
+                state.scanState.scanResult.downloadRaw = Double(value) ?? 0.0
+                state.scanState.scanResult.downloadUnits = Units(rawValue: units)?.integer ?? -1
+                return Effect(value: .scanManager(.startSaveResults))
+                    .debounce(id: CancelDeboundeId(), for: Constants.scanTimeout, scheduler: DispatchQueue.main)
+
+            case "down-done":
+                return .none
+
+            case "up":
+                state.scanState.scanResult.upload = "\(value) \(units)"
+                state.scanState.scanResult.uploadRaw = Double(value) ?? 0.0
+                state.scanState.scanResult.uploadUnits = Units(rawValue: units)?.integer ?? -1
+                return Effect(value: .scanManager(.startSaveResults))
+                    .debounce(id: CancelDeboundeId(), for: Constants.scanTimeout, scheduler: DispatchQueue.main)
+
+            case "up-done":
+                return .concatenate(
+                    .cancel(id: CancelDeboundeId()),
+                    Effect(value: .scanManager(.startSaveResults))
+                )
+
+            default:
+                return .none
+            }
+        }
 
     // MARK: - Delegates
 
-    case .dismissScanner,
-         .scanManager(.dismissScanner):
+    case .dismissScanner,.scanManager(.dismissScanner):
         state.showScanner = false
-        return .none
+        return environment.fastManager.destroy(id: FastManagerId()).fireAndForget()
 
     default:
         return .none

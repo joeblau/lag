@@ -109,14 +109,12 @@ let scanReducer = Reducer<ScanState, ScanAction, AppEnvironment> { state, action
 
     switch action {
     case .startTest:
-        struct ScanningTimeoutDeboundeId: Hashable {}
-
-//        state.scanning = .saved
-//        return .none
+        UIApplication.shared.isIdleTimerDisabled = true
         state.scanning = .started
         return environment.fastManager.startTest(id: FastManagerId()).fireAndForget()
 
     case .startSaveResults:
+        UIApplication.shared.isIdleTimerDisabled = false
         guard state.scanResult.download != nil, state.scanResult.upload != nil else {
             return .merge(
                 environment.fastManager.stopTest(id: FastManagerId()).fireAndForget(),
@@ -200,7 +198,8 @@ let scanReducer = Reducer<ScanState, ScanAction, AppEnvironment> { state, action
                 grade = .a
                 supportedServcies = .a
             }
-        case 2: grade = .a
+        case 2:
+            grade = .a
             supportedServcies = .a
         default:
             grade = .f

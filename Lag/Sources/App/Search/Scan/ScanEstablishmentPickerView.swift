@@ -17,7 +17,9 @@ struct ScanEstablishmentPickerView: View {
                 ForEach(0 ..< types.count) { index in
                     Text(self.types[index].emoji).tag(index)
                 }
-            }.pickerStyle(SegmentedPickerStyle())
+            }
+            .disabled(viewStore.scanning != .notStarted)
+            .pickerStyle(SegmentedPickerStyle())
         }
     }
 }
