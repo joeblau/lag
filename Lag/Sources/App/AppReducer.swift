@@ -162,6 +162,7 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
             guard let location = locations.last?.rawValue else { return .none }
 
             state.previousLocation = location
+            state.searchState.scanState.location = location
             state.searchState.scanState.scanResult._geoloc = GeoLoc(lat: location.coordinate.latitude,
                                                                     lng: location.coordinate.longitude)
             return Effect(value: .reverseGeocode(location))
@@ -211,6 +212,7 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
     // MARK: - Lifecycle
 
     case .onActive:
+        print(CLLocation(latitude: 200.0, longitude: 200.0).coordinate)
         return .merge(
             environment.locationManager.create(id: LocationManagerId()).map(AppAction.locationManager),
             environment.fastManager.create(id: FastManagerId()).map(AppAction.fastManager),

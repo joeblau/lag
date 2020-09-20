@@ -87,18 +87,18 @@ struct ScanView: View {
                                 .padding()
 
                         case .saved:
-                            Button(action: {
-                                viewStore.send(.dismissScanner)
-                            }, label: {
-                                Text("Close")
-                                    .font(.headline)
-                                    .frame(maxWidth: .infinity)
-                                    .foregroundColor(.white)
-                                    .padding()
-                                    .background(Color.blue)
-                                    .clipShape(Capsule())
-                            })
+                            NavigationLink(destination: SealView(store: store),
+                                label: {
+                                    Text("Show Seal")
+                                        .font(.headline)
+                                        .frame(maxWidth: .infinity)
+                                        .foregroundColor(.white)
+                                        .padding()
+                                        .background(Color.blue)
+                                        .clipShape(Capsule())
+                                })
                                 .padding()
+
                         case .error:
                             Button(action: {
                                 viewStore.send(.startTest)
@@ -125,6 +125,7 @@ struct ScanView: View {
                     }),
                     trailing:
                     ScanWiFiTagView(isWiFiOn: viewStore.scanResult.onWiFi))
+
             })
         }
     }

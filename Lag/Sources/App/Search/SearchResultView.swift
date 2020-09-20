@@ -20,16 +20,16 @@ struct SearchResultView: View {
             Spacer()
             VStack(alignment: .trailing, spacing: 8) {
                 HStack {
-                    Image(systemName: "arrow.up")
-                        .foregroundColor(Color(.secondaryLabel))
-                        .font(Font.footnote.weight(.heavy))
-                    Text(result.upload)
-                }
-                HStack {
                     Image(systemName: "arrow.down")
                         .foregroundColor(Color(.secondaryLabel))
                         .font(Font.footnote.weight(.heavy))
                     Text(result.download)
+                }
+                HStack {
+                    Image(systemName: "arrow.up")
+                        .foregroundColor(Color(.secondaryLabel))
+                        .font(Font.footnote.weight(.heavy))
+                    Text(result.upload)
                 }
                 Spacer()
             }
