@@ -40,8 +40,10 @@ struct SealView: View {
     }
 }
 
+#if DEBUG
 struct SealView_Previews: PreviewProvider {
     static var previews: some View {
         SealView(store: sampleScanStore)
     }
 }
+#endif
