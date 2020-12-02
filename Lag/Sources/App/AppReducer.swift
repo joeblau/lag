@@ -104,7 +104,7 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
                 environment.geocoder
                     .reverseGeocodeLocation(location, completionHandler: { placemarks, error in
                         guard error == nil,
-                            let address = placemarks?.first?.address else { return }
+                              let address = placemarks?.first?.address else { return }
                         completion(.success(.updateNearestPointOfInterest(nil, address)))
                     })
             }
@@ -118,7 +118,7 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
         state.searchState.scanState.establishmentPickerIndex = index
 
         guard let category = Constants.pointsOfInterest[index].category,
-            let coordinate = state.searchState.scanState.scanResult._geoloc
+              let coordinate = state.searchState.scanState.scanResult._geoloc
         else {
             return Effect(value: .reverseGeocode(state.previousLocation))
         }
@@ -150,7 +150,7 @@ let app = Reducer<AppState, AppAction, AppEnvironment>({ state, action, environm
                 }
 
                 guard let poiName = closestItem?.name,
-                    let address = closestItem?.placemark.address else { return }
+                      let address = closestItem?.placemark.address else { return }
                 completion(.success(.updateNearestPointOfInterest(poiName, address)))
             }
         }

@@ -10,7 +10,7 @@ import UIKit
 
 struct SupportedServicesOptions: OptionSet, Equatable {
     let rawValue: Int
-    
+
     static let email = SupportedServicesOptions(rawValue: 1 << 0)
     static let audio = SupportedServicesOptions(rawValue: 1 << 1)
     static let web = SupportedServicesOptions(rawValue: 1 << 2)
@@ -21,7 +21,7 @@ struct SupportedServicesOptions: OptionSet, Equatable {
     static let hdVideo = SupportedServicesOptions(rawValue: 1 << 7)
     static let gaming = SupportedServicesOptions(rawValue: 1 << 8)
     static let kkkkVideo = SupportedServicesOptions(rawValue: 1 << 9)
-    
+
     static let na: SupportedServicesOptions = []
     static let f: SupportedServicesOptions = [.email, .audio]
     static let d: SupportedServicesOptions = [.email, .audio, .web, .sdVideo, .oneToOneVideoCall]
@@ -44,7 +44,7 @@ enum Grade: Equatable, CustomStringConvertible {
     case c
     case d
     case f
-    
+
     var description: String {
         switch self {
         case .a: return "A"
@@ -96,7 +96,7 @@ struct ScanState: Equatable {
 enum ScanAction: Equatable {
     case dismissScanner
     case dismissShareSheet
-    
+
     case exportSeal
     case startSaveResults
     case saveError
@@ -106,13 +106,13 @@ enum ScanAction: Equatable {
 }
 
 let scanReducer = Reducer<ScanState, ScanAction, AppEnvironment> { state, action, environment in
-    
+
     switch action {
     case .startTest:
         UIApplication.shared.isIdleTimerDisabled = true
         state.scanning = .started
         return environment.fastManager.startTest(id: FastManagerId()).fireAndForget()
-        
+
     case .startSaveResults:
         UIApplication.shared.isIdleTimerDisabled = false
         guard state.scanResult.download != nil, state.scanResult.upload != nil else {
@@ -121,10 +121,10 @@ let scanReducer = Reducer<ScanState, ScanAction, AppEnvironment> { state, action
                 Effect(value: .saveError)
             )
         }
-        
+
         guard let data = state.scanResult.address?.data(using: .utf8) else { return .none }
         let digest = Insecure.SHA1.hash(data: data)
-        
+
         switch UserDefaults.standard.array(forKey: Constants.scannedLocationsKey) as? [String] {
         case var .some(scannedLocations):
             scannedLocations.append(digest.hexStr)
@@ -132,53 +132,53 @@ let scanReducer = Reducer<ScanState, ScanAction, AppEnvironment> { state, action
         case .none:
             UserDefaults.standard.setValue([digest.hexStr], forKey: Constants.scannedLocationsKey)
         }
-        
+
         state.scanning = .completed
         state.scanResult.objectID = ObjectID(stringLiteral: digest.hexStr)
         let scanResults = [state.scanResult]
-        
+
         #if targetEnvironment(simulator)
-        return Effect(value: .saveCompleted)
+            return Effect(value: .saveCompleted)
         #else
-        return .future { completion in
-            environment.latencyIndex.saveObjects(scanResults, autoGeneratingObjectID: true) { result in
-                switch result {
-                case let .success(response):
-                    completion(.success(.saveCompleted))
-                case let .failure(error):
-                    logger.error("\(error.localizedDescription)")
+            return .future { completion in
+                environment.latencyIndex.saveObjects(scanResults, autoGeneratingObjectID: true) { result in
+                    switch result {
+                    case let .success(response):
+                        completion(.success(.saveCompleted))
+                    case let .failure(error):
+                        logger.error("\(error.localizedDescription)")
+                    }
                 }
             }
-        }
         #endif
-        
+
     case .saveError:
         state.scanning = .error
         return .none
-        
+
     case .exportSeal:
         state.showShareSheet = true
         return .none
-        
+
     case .dismissShareSheet:
         state.showShareSheet = false
         return .none
-        
+
     case .saveCompleted:
         state.scanning = .saved
-        
+
         guard let location = state.location,
               let downloadSpeed = state.scanResult.download,
               let uploadSpeed = state.scanResult.upload
         else {
             return .none
         }
-        
+
         let addressHash = state.scanResult.objectID.rawValue
-        
+
         let grade: Grade
         let supportedServcies: SupportedServicesOptions
-        
+
         switch state.scanResult.downloadUnits {
         case 1:
             switch state.scanResult.downloadRaw {
@@ -205,7 +205,7 @@ let scanReducer = Reducer<ScanState, ScanAction, AppEnvironment> { state, action
             grade = .f
             supportedServcies = .na
         }
-        
+
         state.seal = Seal(addressHash: state.scanResult.objectID.rawValue,
                           location: location,
                           downloadSpeed: downloadSpeed,
@@ -213,7 +213,7 @@ let scanReducer = Reducer<ScanState, ScanAction, AppEnvironment> { state, action
                           supportedServices: supportedServcies,
                           grade: grade)
         return .none
-        
+
     default:
         return .none
     }

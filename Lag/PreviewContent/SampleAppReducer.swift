@@ -13,6 +13,6 @@ import Foundation
     let sampleAppStore = Store(initialState: AppState(),
                                reducer: app,
                                environment: AppEnvironment(latencyIndex: SearchClient(appID: "", apiKey: "").index(withName: ""),
-                                                           locationManager: .mock(),
+                                                           locationManager: .unimplemented(),
                                                            fastManager: .mock()))
 #endif

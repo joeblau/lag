@@ -7,7 +7,7 @@ import UIKit
 
 struct SealView: View {
     let store: Store<ScanState, ScanAction>
-    
+
     var body: some View {
         WithViewStore(store) { viewStore in
             VStack {
@@ -19,7 +19,7 @@ struct SealView: View {
                         .padding(.horizontal, -300)
                 }
                 Spacer()
-                
+
                 Button(action: {
                     viewStore.send(.exportSeal)
                 }, label: {
@@ -31,19 +31,20 @@ struct SealView: View {
                         .background(Color.blue)
                         .clipShape(Capsule())
                 })
-                .padding()
+                    .padding()
             }
             .navigationBarTitle("Speed Seal")
             .sheet(isPresented: viewStore.binding(get: { $0.showShareSheet }, send: .dismissShareSheet), content: {
-                    ActivityView(activityItems: [ScanSealUIView(seal: viewStore.seal).asImage().pngData()!] as [Any], applicationActivities: nil) })
+                ActivityView(activityItems: [ScanSealUIView(seal: viewStore.seal).asImage().pngData()!] as [Any], applicationActivities: nil)
+            })
         }
     }
 }
 
 #if DEBUG
-struct SealView_Previews: PreviewProvider {
-    static var previews: some View {
-        SealView(store: sampleScanStore)
+    struct SealView_Previews: PreviewProvider {
+        static var previews: some View {
+            SealView(store: sampleScanStore)
+        }
     }
-}
 #endif

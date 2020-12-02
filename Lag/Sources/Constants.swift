@@ -13,7 +13,7 @@ struct PointOfInterest {
 struct LocationManagerId: Hashable {}
 struct FastManagerId: Hashable {}
 
-struct Constants {
+enum Constants {
     static var scanTimeout: DispatchQueue.SchedulerTimeType.Stride = .seconds(15)
     static var sealRing = "Streammm 4k • Online Gaming • Streaming HD • Social Media • Video Conference Calls • One-on-one Video Calls • Streaming SD • Web Browsing • Streaming Music • Email • "
     static var scannedLocationsKey = "user_scanned_locations_key"

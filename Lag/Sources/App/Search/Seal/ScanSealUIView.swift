@@ -1,9 +1,5 @@
-//
-//  ScanSealUIView.swift
-//  Lag
-//
-//  Created by Joe Blau on 9/19/20.
-//
+// ScanSealUIView.swift
+// Copyright (c) 2020 Submap
 
 import UIKit
 
@@ -14,14 +10,14 @@ class ScanSealUIView: UIView {
     private let byLineDescriptor = UIFont.systemFont(ofSize: 300, weight: .semibold).fontDescriptor.withDesign(.rounded)!
     private let colors = [UIColor(displayP3Red: 0.016, green: 0.482, blue: 0.820, alpha: 1).cgColor,
                           UIColor(displayP3Red: 0.380, green: 0.216, blue: 1.000, alpha: 1).cgColor]
-    
+
     private lazy var outterSeal: UIView = {
         let v = UIView(frame: CGRect(origin: .zero, size: size))
         v.backgroundColor = .black
         v.layer.cornerRadius = size.width / 2
         return v
     }()
-    
+
     private lazy var innerSeal: UIView = {
         let innerDiameter = size.width * 0.91
         let xy = (size.width - innerDiameter) / 2
@@ -36,7 +32,7 @@ class ScanSealUIView: UIView {
         v.layer.insertSublayer(gradient, at: 0)
         return v
     }()
-    
+
     private lazy var grade: UILabel = {
         let l = UILabel(frame: CGRect(x: 0, y: 100, width: size.width, height: 256))
         l.font = UIFont(descriptor: descriptor, size: 300)
@@ -44,7 +40,7 @@ class ScanSealUIView: UIView {
         l.textColor = .white
         return l
     }()
-    
+
     private lazy var serviceStack: UIStackView = {
         let topRow = UIStackView(arrangedSubviews: [
             ScanServiceView(systemName: "envelope.fill", name: "Email", isSupported: seal.supportedServices.contains(.f)),
@@ -67,25 +63,25 @@ class ScanSealUIView: UIView {
         bottomRow.translatesAutoresizingMaskIntoConstraints = false
         bottomRow.distribution = .fillEqually
         bottomRow.alignment = .center
-        
+
         let v = UIStackView(arrangedSubviews: [topRow, bottomRow])
         v.frame = CGRect(x: 102.4, y: 412, width: 819.2, height: 200)
         v.axis = .vertical
         v.distribution = .equalSpacing
         return v
     }()
-    
+
     private lazy var details: UIStackView = {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
-        
+
         let downloadAttachment = NSTextAttachment()
         downloadAttachment.image = UIImage(systemName: "arrow.down")?.withRenderingMode(.alwaysTemplate)
         downloadAttachment.setImageHeight(height: 50)
 
         let downloadAttributed = NSMutableAttributedString(attachment: downloadAttachment)
-        downloadAttributed.append(NSAttributedString(string: seal.downloadSpeed, attributes: [ NSAttributedString.Key.paragraphStyle: paragraphStyle]))
-        
+        downloadAttributed.append(NSAttributedString(string: seal.downloadSpeed, attributes: [NSAttributedString.Key.paragraphStyle: paragraphStyle]))
+
         let downloadSpeed = UILabel()
         downloadSpeed.textColor = .white
         downloadSpeed.attributedText = downloadAttributed
@@ -94,10 +90,10 @@ class ScanSealUIView: UIView {
         let uploadAttachment = NSTextAttachment()
         uploadAttachment.image = UIImage(systemName: "arrow.up")?.withRenderingMode(.alwaysTemplate)
         uploadAttachment.setImageHeight(height: 50)
-        
+
         let uploadAttributed = NSMutableAttributedString(attachment: uploadAttachment)
-        uploadAttributed.append(NSAttributedString(string: seal.uploadSpeed, attributes: [ NSAttributedString.Key.paragraphStyle: paragraphStyle]))
-        
+        uploadAttributed.append(NSAttributedString(string: seal.uploadSpeed, attributes: [NSAttributedString.Key.paragraphStyle: paragraphStyle]))
+
         let uploadSpeed = UILabel()
         uploadSpeed.textColor = .white
         uploadSpeed.attributedText = uploadAttributed
@@ -108,7 +104,7 @@ class ScanSealUIView: UIView {
         byLine.font = UIFont(descriptor: byLineDescriptor, size: 32)
         byLine.textColor = UIColor.white.withAlphaComponent(0.3)
         byLine.sizeToFit()
-        
+
         let v = UIStackView(arrangedSubviews: [downloadSpeed, uploadSpeed, byLine])
         v.frame = CGRect(x: 0, y: 668, width: size.width, height: 200)
         v.axis = .vertical
@@ -116,25 +112,24 @@ class ScanSealUIView: UIView {
         v.distribution = .equalSpacing
         return v
     }()
-    
-    
+
     init(seal: Seal) {
         self.seal = seal
         super.init(frame: CGRect(origin: .zero, size: size))
         backgroundColor = .clear
-        
+
         grade.text = seal.grade.description
-        
+
         addSubview(outterSeal)
         addSubview(innerSeal)
         addSubview(grade)
         addSubview(serviceStack)
         addSubview(details)
-        
+
         UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
         let context = UIGraphicsGetCurrentContext()!
-        
-        context.translateBy (x: size.width / 2, y: size.height / 2)
+
+        context.translateBy(x: size.width / 2, y: size.height / 2)
         context.scaleBy(x: 1, y: -1)
 
         centreArcPerpendicular(text: Constants.sealRing,
@@ -145,7 +140,7 @@ class ScanSealUIView: UIView {
                                font: UIFont.monospacedSystemFont(ofSize: 28, weight: .bold),
                                clockwise: true,
                                kerning: 1.2)
-        
+
         centreArcPerpendicular(text: "\(seal.addressHash) • \(seal.location.description)",
                                context: context,
                                radius: (size.width / 2) * 0.87,
@@ -161,14 +156,15 @@ class ScanSealUIView: UIView {
 
         addSubview(imageView)
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Prviate
-    
-    private func centreArcPerpendicular(text str: String, context: CGContext, radius r: CGFloat, angle theta: CGFloat, colour c: UIColor, font: UIFont, clockwise: Bool, kerning: CGFloat){
+
+    private func centreArcPerpendicular(text str: String, context: CGContext, radius r: CGFloat, angle theta: CGFloat, colour c: UIColor, font: UIFont, clockwise: Bool, kerning: CGFloat) {
         let characters: [String] = str.map { String($0) }
         let l = characters.count
         let attributes = [NSAttributedString.Key.font: font]
@@ -194,7 +190,7 @@ class ScanSealUIView: UIView {
     }
 
     private func chordToArc(_ chord: CGFloat, radius: CGFloat) -> CGFloat {
-        return 2 * asin(chord / (2 * radius))
+        2 * asin(chord / (2 * radius))
     }
 
     private func centre(text str: String, context: CGContext, radius r: CGFloat, angle theta: CGFloat, colour c: UIColor, font: UIFont, slantAngle: CGFloat) {
@@ -204,7 +200,7 @@ class ScanSealUIView: UIView {
         context.translateBy(x: r * cos(theta), y: -(r * sin(theta)))
         context.rotate(by: -slantAngle)
         let offset = str.size(withAttributes: attributes)
-        context.translateBy (x: -offset.width / 2, y: -offset.height / 2)
+        context.translateBy(x: -offset.width / 2, y: -offset.height / 2)
         str.draw(at: CGPoint(x: 0, y: 0), withAttributes: attributes)
         context.restoreGState()
     }

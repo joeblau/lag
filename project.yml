@@ -1,7 +1,7 @@
 name: Lag
 settings:
   DEVELOPMENT_TEAM: K78G42H4U2
-  CURRENT_PROJECT_VERSION: 6
+  CURRENT_PROJECT_VERSION: 8
   MARKETING_VERSION: 0.1.0
 options:
   bundleIdPrefix: com.joeblau
@@ -13,13 +13,13 @@ options:
   postGenCommand: .github/scripts/post.sh
 packages:
   swift-composable-architecture:
-    url: https://github.com/submapco/swift-composable-architecture
-    from: 0.8.0
+    url: git@github.com:pointfreeco/swift-composable-architecture.git
+    from: 0.9.0
   algolia-search-client:
     url: https://github.com/joeblau/algoliasearch-client-swift
     branch: master
-  composable-fast:
-    url: https://github.com/joeblau/composable-fast
+  swift-composable-kit:
+    url: git@github.com:ridevelo/swift-composable-kit.git
     from: 0.1.0
 targets:
   Lag:
@@ -38,9 +38,9 @@ targets:
     dependencies:
       - package: swift-composable-architecture
         product: ComposableArchitecture
-      - package: swift-composable-architecture
+      - package: swift-composable-kit
         product: ComposableCoreLocation
+      - package: swift-composable-kit
+        product: ComposableFast
       - package: algolia-search-client
         product: AlgoliaSearchClient
-      - package: composable-fast
-        product: ComposableFast

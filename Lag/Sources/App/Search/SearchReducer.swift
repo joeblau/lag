@@ -3,8 +3,8 @@
 
 import AlgoliaSearchClient
 import ComposableArchitecture
-import Foundation
 import ComposableFast
+import Foundation
 
 struct SearchResult: Equatable, Hashable {
     var pointOfInterest: String?
@@ -27,7 +27,7 @@ struct SearchState: Equatable {
 
 enum SearchAction: Equatable {
     case fastManager(FastManager.Action)
-    
+
     case presentScanner
     case dismissScanner
     case setIsEditing(Bool)
@@ -77,8 +77,8 @@ let searchReducer = Reducer<SearchState, SearchAction, AppEnvironment> { state, 
                 case let .success(response):
                     let results = response.hits.compactMap { hit -> SearchResult? in
                         guard let address = hit.object["address"]?.object() as? String,
-                            let download = hit.object["download"]?.object() as? String,
-                            let upload = hit.object["upload"]?.object() as? String else { return nil }
+                              let download = hit.object["download"]?.object() as? String,
+                              let upload = hit.object["upload"]?.object() as? String else { return nil }
 
                         return SearchResult(pointOfInterest: hit.object["pointOfInterest"]?.object() as? String,
                                             address: address,
@@ -103,16 +103,16 @@ let searchReducer = Reducer<SearchState, SearchAction, AppEnvironment> { state, 
         state.previousQuery = ""
         state.queryResults = [SearchResult]()
         return .none
-        
+
     case let .fastManager(action):
         struct CancelDeboundeId: Hashable {}
 
         switch action {
         case let .didReceive(message: message):
             guard let body = message.body as? NSDictionary,
-                let type = body["type"] as? String,
-                let units = body["units"] as? String,
-                let value = body["value"] as? String else { return .none }
+                  let type = body["type"] as? String,
+                  let units = body["units"] as? String,
+                  let value = body["value"] as? String else { return .none }
 
             switch type {
             case "down":
@@ -145,7 +145,7 @@ let searchReducer = Reducer<SearchState, SearchAction, AppEnvironment> { state, 
 
     // MARK: - Delegates
 
-    case .dismissScanner,.scanManager(.dismissScanner):
+    case .dismissScanner, .scanManager(.dismissScanner):
         state.showScanner = false
         return environment.fastManager.destroy(id: FastManagerId()).fireAndForget()
 

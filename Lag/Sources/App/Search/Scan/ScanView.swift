@@ -88,15 +88,15 @@ struct ScanView: View {
 
                         case .saved:
                             NavigationLink(destination: SealView(store: store),
-                                label: {
-                                    Text("Show Seal")
-                                        .font(.headline)
-                                        .frame(maxWidth: .infinity)
-                                        .foregroundColor(.white)
-                                        .padding()
-                                        .background(Color.blue)
-                                        .clipShape(Capsule())
-                                })
+                                           label: {
+                                               Text("Show Seal")
+                                                   .font(.headline)
+                                                   .frame(maxWidth: .infinity)
+                                                   .foregroundColor(.white)
+                                                   .padding()
+                                                   .background(Color.blue)
+                                                   .clipShape(Capsule())
+                                           })
                                 .padding()
 
                         case .error:

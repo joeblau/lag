@@ -12,6 +12,6 @@ import Foundation
     let sampleScanStore = Store(initialState: ScanState(),
                                 reducer: scanReducer,
                                 environment: AppEnvironment(latencyIndex: SearchClient(appID: "", apiKey: "").index(withName: ""),
-                                                            locationManager: .mock(),
+                                                            locationManager: .unimplemented(),
                                                             fastManager: .mock()))
 #endif

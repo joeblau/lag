@@ -14,6 +14,6 @@ import Foundation
     let sampleSearchStore = Store(initialState: SearchState(queryResults: queryResults),
                                   reducer: searchReducer,
                                   environment: AppEnvironment(latencyIndex: SearchClient(appID: "", apiKey: "").index(withName: ""),
-                                                              locationManager: .mock(),
+                                                              locationManager: .unimplemented(),
                                                               fastManager: .mock()))
 #endif

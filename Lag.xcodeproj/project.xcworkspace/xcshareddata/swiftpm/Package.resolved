@@ -20,15 +20,6 @@
         }
       },
       {
-        "package": "composable-fast",
-        "repositoryURL": "https://github.com/joeblau/composable-fast",
-        "state": {
-          "branch": null,
-          "revision": "4c74d967144a49810ba0919efab8fe5d6c07e27a",
-          "version": "0.1.0"
-        }
-      },
-      {
         "package": "swift-case-paths",
         "repositoryURL": "https://github.com/pointfreeco/swift-case-paths",
         "state": {
@@ -39,11 +30,20 @@
       },
       {
         "package": "swift-composable-architecture",
-        "repositoryURL": "https://github.com/submapco/swift-composable-architecture",
+        "repositoryURL": "git@github.com:pointfreeco/swift-composable-architecture.git",
         "state": {
           "branch": null,
-          "revision": "65e2e8aa498785bfa783a01364aa35fe819781ea",
-          "version": "0.8.0"
+          "revision": "b67569f69813140cd9c984db33ee959d9711a008",
+          "version": "0.9.0"
+        }
+      },
+      {
+        "package": "swift-composable-kit",
+        "repositoryURL": "git@github.com:ridevelo/swift-composable-kit.git",
+        "state": {
+          "branch": null,
+          "revision": "1479f42721cc5d8aae2a3e794d12fcecd6736084",
+          "version": "0.5.2"
         }
       },
       {
